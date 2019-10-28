@@ -1,0 +1,32 @@
+﻿CARINRTPBC : Validation Results
+=========================================
+
+err = 2, warn = 0, info = 0
+IG Publisher Version: v0.9.87-SNAPSHOT
+Generated Mon Oct 28 11:32:22 CDT 2019. FHIR version 4.0.0 for hl7.fhir.us.carin-rtpbc#0.1.00-DRAFT (canonical = http://hl7.org/fhir/us/carin-bb)
+
+ Build Errors : 1 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\implementationguide\CARIN-RTPBC : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-ClaimResponse : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-Coverage : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-MedicationRequest : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-OperationOutcome : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-Patient : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-Practitioner : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-claim : 1 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-payer-Organization : 0 / 0
+ Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-pharmacy-Organization : 0 / 0
+</table>
+== n/a ==
+ERROR: Z:\fhir\igs\carin-rtpbc\CARINRTPBC\output\index.html#/html/head/link/body/div/div/div/div/div/div/p/em/a at Line 248, column 17: The link '../CARIN-RTPBC/toc.html' for "narrative table of contents…" cannot be resolved
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\implementationguide\CARIN-RTPBC.xml ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-ClaimResponse.json ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-Coverage.json ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-MedicationRequest.json ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-OperationOutcome.json ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-Patient.json ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-Practitioner.json ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-claim.json ==
+ERROR: StructureDefinition/carin-rtpbc-claim: StructureDefinition.differential.element[61].binding.valueSet: URL value 'http://hl7.org/fhir/us/carin/ValueSet/carin-rtpbc-billing-quantity-unit-of-measure' does not resolve
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-payer-Organization.json ==
+== Z:\fhir\igs\carin-rtpbc\CARINRTPBC\source\resources\structuredefinition\carin-rtpbc-pharmacy-Organization.json ==

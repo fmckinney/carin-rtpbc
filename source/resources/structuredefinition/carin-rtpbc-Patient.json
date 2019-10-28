@@ -1,0 +1,68 @@
+{
+	"resourceType": "StructureDefinition",
+	"id": "carin-rtpbc-Patient",
+	"meta": {
+		"versionId": "6",
+		"lastUpdated": "2019-10-17T18:41:20.000-04:00"
+	},
+	"text": {
+		"status": "additional",
+		"div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div xmlns=\"http://www.w3.org/1999/xhtml\"><div>This profile constrains the Patient resource for carrying the patient information required in the consumer real-time pharmacy benefit \ncheck process.</div></div></div>"
+	},
+	"url": "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Patient",
+	"version": "0.0.1",
+	"name": "CARINRTPBCPatient",
+	"title": "CARIN RTPBC Patient",
+	"status": "draft",
+	"date": "2019-10-03",
+	"publisher": "CARIN Alliance",
+	"description": "This profile constrains the Patient resource for carrying the patient information required in the consumer real-time pharmacy benefit check process.",
+	"fhirVersion": "4.0.0",
+	"kind": "resource",
+	"abstract": false,
+	"type": "Patient",
+	"baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+	"derivation": "constraint",
+	"differential": {
+		"element": [
+			{
+				"id": "Patient",
+				"path": "Patient"
+			},
+			{
+				"id": "Patient.name",
+				"path": "Patient.name",
+				"min": 1,
+				"max": "1"
+			},
+			{
+				"id": "Patient.gender",
+				"path": "Patient.gender",
+				"min": 1
+			},
+			{
+				"id": "Patient.birthDate",
+				"path": "Patient.birthDate",
+				"min": 1
+			},
+			{
+				"id": "Patient.address",
+				"path": "Patient.address",
+				"comment": "Include patient address? NCPDP provider RTPBC doesn't include it.",
+				"min": 0
+			},
+			{
+				"id": "Patient.name.family",
+				"path": "Patient.name.family",
+				"min": 1,
+				"max": "1"
+			},
+			{
+				"id": "Patient.name.given",
+				"path": "Patient.name.given",
+				"min": 1,
+				"max": "2"
+			}
+		]
+	}
+}

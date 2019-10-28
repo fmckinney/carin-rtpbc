@@ -1,0 +1,98 @@
+{
+	"resourceType": "StructureDefinition",
+	"id": "carin-rtpbc-pharmacy-Organization",
+	"meta": {
+		"versionId": "13",
+		"lastUpdated": "2019-10-17T19:17:12.000-04:00"
+	},
+	"text": {
+		"status": "additional",
+		"div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">This profile constrains the Organization resource to represent a pharmacy in the consumer real-time pharmacy benefit \ncheck process\n        </div>"
+	},
+	"url": "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-pharmacy-Organization",
+	"version": "0.0.1",
+	"name": "CARINRTPBCPharmacyOrganization",
+	"title": "CARIN RTPBC Pharmacy Organization",
+	"status": "draft",
+	"date": "2019-10-17",
+	"publisher": "CARIN Alliance",
+	"description": "This profile constrains the Organization resource to represent a pharmacy in the consumer real-time pharmacy benefit check process",
+	"fhirVersion": "4.0.0",
+	"kind": "resource",
+	"abstract": false,
+	"type": "Organization",
+	"baseDefinition": "http://hl7.org/fhir/StructureDefinition/Organization",
+	"derivation": "constraint",
+	"differential": {
+		"element": [
+			{
+				"id": "Organization",
+				"path": "Organization"
+			},
+			{
+				"id": "Organization.identifier",
+				"path": "Organization.identifier",
+				"label": "Mandatory NPI or NCPDP ID",
+				"slicing": {
+					"discriminator": [
+						{
+							"type": "value",
+							"path": "system"
+						}
+					],
+					"rules": "open"
+				},
+				"short": "Mandatory NPI or NCPDP ID",
+				"comment": "TODO: Specify that either NPI or NCPDP ID must be present",
+				"min": 1
+			},
+			{
+				"id": "Organization.identifier:pharmacy-npi",
+				"path": "Organization.identifier",
+				"sliceName": "pharmacy-npi",
+				"min": 0,
+				"max": "1"
+			},
+			{
+				"id": "Organization.identifier:pharmacy-npi.system",
+				"path": "Organization.identifier.system",
+				"fixedUri": "http://hl7.org/fhir/sid/us-npi"
+			},
+			{
+				"id": "Organization.identifier:pharmacy-ncpdp-id",
+				"path": "Organization.identifier",
+				"sliceName": "pharmacy-ncpdp-id",
+				"min": 0,
+				"max": "1",
+				"binding": {
+					"strength": "required",
+					"description": "TODO: Refernce NCPDP ID"
+				}
+			},
+			{
+				"id": "Organization.name",
+				"path": "Organization.name",
+				"min": 1
+			},
+			{
+				"id": "Organization.telecom",
+				"path": "Organization.telecom",
+				"min": 1
+			},
+			{
+				"id": "Organization.telecom.system",
+				"path": "Organization.telecom.system",
+				"fixedCode": "phone"
+			},
+			{
+				"id": "Organization.telecom.value",
+				"path": "Organization.telecom.value",
+				"min": 1
+			},
+			{
+				"id": "Organization.identifier:pharmacy-ncpdp-id.system",
+				"path": "Organization.identifier.system"
+			}
+		]
+	}
+}
