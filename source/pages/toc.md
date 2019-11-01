@@ -4,7 +4,7 @@ layout: default
 active: toc
 ---
 
-* <a href="toc.html">Table of contents</a>
+* <a href="toc.html">Narrative table of contents</a>
     * <a href="CARIN_Initiative_and_Consumer_RTPBC.html">CARIN Initiative and Consumer RTPBC</a>
     * <a href="FHIR_implementation_approach.html">FHIR implementation approach</a>
     * <a href="Use_Case_and_Scenarios.html">Use Case and Scenarios</a>

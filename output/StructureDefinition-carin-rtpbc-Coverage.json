@@ -2,22 +2,22 @@
   "resourceType": "StructureDefinition",
   "id": "carin-rtpbc-Coverage",
   "meta": {
-    "versionId": "38",
-    "lastUpdated": "2019-10-31T15:39:31.000-05:00"
+    "versionId": "23",
+    "lastUpdated": "2019-10-17T16:53:58.000-05:00"
   },
   "text": {
     "status": "additional",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n            <div>This profile constrains the Coverage resource for carrying the pharmacy \nbenefit information required in the consumer real-time pharmacy benefit \ncheck process\n            \n            </div>\n        </div>"
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div xmlns=\"http://www.w3.org/1999/xhtml\">This profile constrains the Coverage resource for carrying the pharmacy \nbenefit information required in the consumer real-time pharmacy benefit \ncheck process\n            </div></div>"
   },
-  "url": "http://hl7.org/fhir/us/carin/StructureDefinition/rtpbc-request-coverage-identifiers",
+  "url": "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Coverage",
   "version": "0.1.00-DRAFT",
-  "name": "CarinRtpbcRequestCoverageIdentifiers",
-  "title": "CARIN RTPBC Request Coverage Identifiers",
+  "name": "CARINRTPBCCoverage",
+  "title": "CARIN RTPBC Coverage",
   "status": "draft",
   "date": "2019-10-15T00:00:00-05:00",
   "publisher": "CARIN Alliance",
   "description": "This profile constrains the Coverage resource for carrying the pharmacy benefit information required in the consumer real-time pharmacy benefit check process",
-  "fhirVersion": "4.0.1",
+  "fhirVersion": "4.0.0",
   "mapping": [
     {
       "identity": "workflow",
@@ -77,15 +77,7 @@
             "human": "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
             "expression": "contained.contained.empty()",
             "xpath": "not(parent::f:contained and f:contained)",
-            "source": "http://hl7.org/fhir/StructureDefinition/DomainResource"
-          },
-          {
-            "key": "dom-3",
-            "severity": "error",
-            "human": "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
-            "expression": "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()",
-            "xpath": "not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))",
-            "source": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+            "source": "DomainResource"
           },
           {
             "key": "dom-4",
@@ -93,15 +85,15 @@
             "human": "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
             "expression": "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
             "xpath": "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))",
-            "source": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+            "source": "DomainResource"
           },
           {
-            "key": "dom-5",
+            "key": "dom-3",
             "severity": "error",
-            "human": "If a resource is contained in another resource, it SHALL NOT have a security label",
-            "expression": "contained.meta.security.empty()",
-            "xpath": "not(exists(f:contained/*/f:meta/f:security))",
-            "source": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+            "human": "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
+            "expression": "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()",
+            "xpath": "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))",
+            "source": "DomainResource"
           },
           {
             "extension": [
@@ -117,9 +109,17 @@
             "key": "dom-6",
             "severity": "warning",
             "human": "A resource should have narrative for robust management",
-            "expression": "text.`div`.exists()",
+            "expression": "text.div.exists()",
             "xpath": "exists(f:text/h:div)",
-            "source": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+            "source": "DomainResource"
+          },
+          {
+            "key": "dom-5",
+            "severity": "error",
+            "human": "If a resource is contained in another resource, it SHALL NOT have a security label",
+            "expression": "contained.meta.security.empty()",
+            "xpath": "not(exists(f:contained/*/f:meta/f:security))",
+            "source": "DomainResource"
           }
         ],
         "isModifier": false,
@@ -154,13 +154,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "id"
           }
         ],
         "isModifier": false,
@@ -181,16 +175,6 @@
         "type": [
           {
             "code": "Meta"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -214,16 +198,6 @@
             "code": "uri"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": true,
         "isModifierReason": "This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation",
         "isSummary": true
@@ -244,16 +218,6 @@
         "type": [
           {
             "code": "code"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -300,16 +264,6 @@
         "type": [
           {
             "code": "Narrative"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -375,24 +329,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": false,
         "isSummary": false,
         "mapping": [
@@ -425,24 +361,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": true,
         "isModifierReason": "Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them",
         "isSummary": false,
@@ -470,16 +388,6 @@
         "type": [
           {
             "code": "Identifier"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -530,16 +438,6 @@
             "code": "code"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": true,
         "isModifierReason": "This element is labelled as a modifier because it is a status element that contains status entered-in-error which means that the resource should not be treated as valid",
         "isSummary": true,
@@ -552,7 +450,7 @@
           ],
           "strength": "required",
           "description": "A code specifying the state of the resource instance.",
-          "valueSet": "http://hl7.org/fhir/ValueSet/fm-status|4.0.1"
+          "valueSet": "http://hl7.org/fhir/ValueSet/fm-status|4.0.0"
         },
         "mapping": [
           {
@@ -585,16 +483,6 @@
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -645,16 +533,6 @@
             ]
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -703,16 +581,6 @@
             ]
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -741,8 +609,7 @@
       {
         "id": "Coverage.subscriberId",
         "path": "Coverage.subscriberId",
-        "label": "Health Plan Cardholder ID",
-        "short": "Health Plan Cardholder ID",
+        "short": "ID assigned to the subscriber",
         "definition": "The insurer assigned ID for the Subscriber.",
         "comment": "Either *PBM Member ID* (.class.type = 'rxid') or *Subscriber ID* must be populated",
         "requirements": "The insurer requires this identifier on correspondance and claims (digital and otherwise).",
@@ -758,17 +625,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -813,16 +669,6 @@
             "targetProfile": [
               "http://hl7.org/fhir/StructureDefinition/Patient"
             ]
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -873,16 +719,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -913,16 +749,6 @@
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -961,16 +787,6 @@
         "type": [
           {
             "code": "Period"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -1013,23 +829,10 @@
           {
             "code": "Reference",
             "targetProfile": [
-              "http://hl7.org/fhir/StructureDefinition/Organization",
-              "http://hl7.org/fhir/StructureDefinition/Patient",
-              "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+              "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-payer-Organization"
             ]
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -1068,13 +871,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -1118,24 +915,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": false,
         "isSummary": false,
         "mapping": [
@@ -1166,16 +945,6 @@
         "condition": [
           "ref-1"
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -1203,16 +972,6 @@
             "code": "uri"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "binding": {
@@ -1236,9 +995,8 @@
       {
         "id": "Coverage.payor.identifier",
         "path": "Coverage.payor.identifier",
-        "label": "Payer ID",
-        "short": "Payer ID",
-        "definition": "Payer ID as defined in the participants' environment. E.g., an identifier defined in an eligibility service to represent the payer.",
+        "short": "Logical reference, when literal reference is not known",
+        "definition": "An identifier for the target resource. This is used when there is no way to reference the other resource directly, either because the entity it represents is not available through a FHIR server, or because there is no way for the author of the resource to convert a known identifier to an actual location. There is no requirement that a Reference.identifier point to something that is actually exposed as a FHIR instance, but it SHALL point to a business concept that would be expected to be exposed as a FHIR instance, and that instance would need to be of a FHIR resource type allowed by the reference.",
         "comment": "When an identifier is provided in place of a reference, any system processing the reference will only be able to resolve the identifier to a reference if it understands the business context in which the identifier is used. Sometimes this is global (e.g. a national identifier) but often it is not. For this reason, none of the useful mechanisms described for working with references (e.g. chaining, includes) are possible, nor should servers be expected to be able resolve the reference. Servers may accept an identifier based reference untouched, resolve it, and/or reject it - see CapabilityStatement.rest.resource.referencePolicy. \n\nWhen both an identifier and a literal reference are provided, the literal reference is preferred. Applications processing the resource are allowed - but not required - to check that the identifier matches the literal reference\n\nApplications converting a logical reference to a literal reference may choose to leave the logical reference present, or remove it.\n\nReference is intended to point to a structure that can potentially be expressed as a FHIR resource, though there is no need for it to exist as an actual FHIR resource instance - except in as much as an application wishes to actual find the target of the reference. The content referred to be the identifier must meet the logical constraints implied by any limitations on what resource types are permitted for the reference.  For example, it would not be legitimate to send the identifier for a drug prescription if the type were Reference(Observation|DiagnosticReport).  One of the use-cases for Reference.identifier is the situation where no FHIR representation exists (where the type is Reference (Any).",
         "min": 0,
         "max": "1",
@@ -1252,17 +1010,6 @@
             "code": "Identifier"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -1289,13 +1036,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -1339,24 +1080,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": false,
         "isSummary": false,
         "mapping": [
@@ -1385,16 +1108,6 @@
             "code": "code"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": true,
         "isModifierReason": "This is labeled as \"Is Modifier\" because applications should not mistake a temporary id for a permanent one.",
         "isSummary": true,
@@ -1407,7 +1120,7 @@
           ],
           "strength": "required",
           "description": "Identifies the purpose for this identifier, if known .",
-          "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+          "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.0"
         },
         "mapping": [
           {
@@ -1437,16 +1150,6 @@
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -1485,7 +1188,7 @@
         "definition": "Establishes the namespace for the value - that is, a URL that describes a set values that are unique.",
         "comment": "Identifier.system is always case sensitive.",
         "requirements": "There are many sets  of identifiers.  To perform matching of two identifiers, we need to know what set we're dealing with. The system identifies a particular set of unique identifiers.",
-        "min": 0,
+        "min": 1,
         "max": "1",
         "base": {
           "path": "Identifier.system",
@@ -1503,19 +1206,12 @@
             "valueUri": "http://www.acme.com/identifiers/patient"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
-        "mustSupport": false,
         "isModifier": false,
         "isSummary": true,
+        "binding": {
+          "strength": "extensible",
+          "description": "TODO: Payer ID system"
+        },
         "mapping": [
           {
             "identity": "v2",
@@ -1534,8 +1230,7 @@
       {
         "id": "Coverage.payor.identifier.value",
         "path": "Coverage.payor.identifier.value",
-        "label": "Payer ID Value",
-        "short": "Payer ID Value",
+        "short": "The value that is unique",
         "definition": "The portion of the identifier typically relevant to the user and which is unique within the context of the system.",
         "comment": "If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [Rendered Value extension](http://hl7.org/fhir/R4/extension-rendered-value.html). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe.",
         "min": 1,
@@ -1556,17 +1251,6 @@
             "valueString": "123456"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -1599,16 +1283,6 @@
         "type": [
           {
             "code": "Period"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -1647,16 +1321,6 @@
             "targetProfile": [
               "http://hl7.org/fhir/StructureDefinition/Organization"
             ]
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -1700,16 +1364,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -1728,7 +1382,6 @@
           }
         ],
         "path": "Coverage.class",
-        "label": "Pharmacy coverage identifiers",
         "slicing": {
           "discriminator": [
             {
@@ -1736,15 +1389,14 @@
               "path": "type"
             }
           ],
-          "description": "The value of the .type element indicates the type of coverage identifier  (rxbin=IIN (BIN), rxpcn=PCN, group=Group ID, rxid=PBM Member ID)",
           "ordered": false,
           "rules": "closed"
         },
-        "short": "Pharmacy coverage identifiers",
-        "definition": "Identifiers used by the payer/PBM to located the patient's coverage. IIN (BIN) number, Processor Control Number (PCN), pharmacy benefit Group ID and patient's PBM Member ID",
-        "comment": "Populate with identifiers retrieved from an eligibility service or other source agreed between trading partners",
+        "short": "Additional coverage classifications",
+        "definition": "A suite of underwriter specific classifiers.",
+        "comment": "For example may be used to identify a class of coverage or employer group, Policy, Plan.",
         "requirements": "The codes provided on the health card which identify or confirm the specific policy for the insurer.",
-        "min": 0,
+        "min": 3,
         "max": "4",
         "base": {
           "path": "Coverage.class",
@@ -1763,10 +1415,9 @@
             "human": "All FHIR elements must have a @value or children",
             "expression": "hasValue() or (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+            "source": "Element"
           }
         ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": false
       },
@@ -1787,13 +1438,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -1825,24 +1470,6 @@
         "type": [
           {
             "code": "Extension"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
           }
         ],
         "isModifier": false,
@@ -1878,24 +1505,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": true,
         "isModifierReason": "Modifier extensions are expected to modify the meaning or interpretation of the element that contains them",
         "isSummary": true,
@@ -1922,16 +1531,6 @@
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -1965,16 +1564,6 @@
         "type": [
           {
             "code": "string"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -2012,16 +1601,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -2049,12 +1628,12 @@
         ],
         "path": "Coverage.class",
         "sliceName": "bin",
-        "label": "IIN (BIN) number",
-        "short": "IIN (BIN) number",
+        "label": "BIN",
+        "short": "BIN",
         "definition": "A suite of underwriter specific classifiers.",
-        "comment": "Populate as agreed between trading partners",
+        "comment": "For example may be used to identify a class of coverage or employer group, Policy, Plan.",
         "requirements": "The codes provided on the health card which identify or confirm the specific policy for the insurer.",
-        "min": 0,
+        "min": 1,
         "max": "1",
         "base": {
           "path": "Coverage.class",
@@ -2073,10 +1652,9 @@
             "human": "All FHIR elements must have a @value or children",
             "expression": "hasValue() or (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+            "source": "Element"
           }
         ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": false
       },
@@ -2097,13 +1675,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -2137,24 +1709,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": false,
         "isSummary": false,
         "mapping": [
@@ -2186,24 +1740,6 @@
         "type": [
           {
             "code": "Extension"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
           }
         ],
         "isModifier": true,
@@ -2242,16 +1778,6 @@
             }
           ]
         },
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "binding": {
@@ -2283,16 +1809,6 @@
         "type": [
           {
             "code": "string"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -2330,16 +1846,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -2367,12 +1873,12 @@
         ],
         "path": "Coverage.class",
         "sliceName": "pcn",
-        "label": "Processor Control Number (PCN)",
-        "short": "Processor Control Number (PCN)",
+        "label": "PCN (IIN)",
+        "short": "PCN (IIN)",
         "definition": "A suite of underwriter specific classifiers.",
-        "comment": "Populate as agreed between trading partners",
+        "comment": "For example may be used to identify a class of coverage or employer group, Policy, Plan.",
         "requirements": "The codes provided on the health card which identify or confirm the specific policy for the insurer.",
-        "min": 0,
+        "min": 1,
         "max": "1",
         "base": {
           "path": "Coverage.class",
@@ -2391,10 +1897,9 @@
             "human": "All FHIR elements must have a @value or children",
             "expression": "hasValue() or (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+            "source": "Element"
           }
         ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": false
       },
@@ -2415,13 +1920,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -2455,24 +1954,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": false,
         "isSummary": false,
         "mapping": [
@@ -2504,24 +1985,6 @@
         "type": [
           {
             "code": "Extension"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
           }
         ],
         "isModifier": true,
@@ -2560,16 +2023,6 @@
             }
           ]
         },
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "binding": {
@@ -2601,16 +2054,6 @@
         "type": [
           {
             "code": "string"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -2648,16 +2091,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -2685,12 +2118,12 @@
         ],
         "path": "Coverage.class",
         "sliceName": "group-id",
-        "label": "Pharmacy Benefit Group ID",
-        "short": "Pharmacy Benefit Group ID",
-        "definition": "The patient's Group ID associated with their pharmacy benefit",
-        "comment": "Populate as agreed between trading partners",
+        "label": "Group ID",
+        "short": "Group ID",
+        "definition": "A suite of underwriter specific classifiers.",
+        "comment": "For example may be used to identify a class of coverage or employer group, Policy, Plan.",
         "requirements": "The codes provided on the health card which identify or confirm the specific policy for the insurer.",
-        "min": 0,
+        "min": 1,
         "max": "1",
         "base": {
           "path": "Coverage.class",
@@ -2709,10 +2142,9 @@
             "human": "All FHIR elements must have a @value or children",
             "expression": "hasValue() or (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+            "source": "Element"
           }
         ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": false
       },
@@ -2733,13 +2165,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -2773,24 +2199,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": false,
         "isSummary": false,
         "mapping": [
@@ -2822,24 +2230,6 @@
         "type": [
           {
             "code": "Extension"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
           }
         ],
         "isModifier": true,
@@ -2878,16 +2268,6 @@
             }
           ]
         },
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "binding": {
@@ -2919,16 +2299,6 @@
         "type": [
           {
             "code": "string"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -2966,16 +2336,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -3005,8 +2365,8 @@
         "sliceName": "pbm-member-id",
         "label": "PBM Member ID",
         "short": "PBM Member ID",
-        "definition": "The patient's pharmacy benefit member ID (which may differ from their overall health insurance ID)",
-        "comment": "Populate as agreed between trading partners",
+        "definition": "A suite of underwriter specific classifiers.",
+        "comment": "For example may be used to identify a class of coverage or employer group, Policy, Plan.",
         "requirements": "The codes provided on the health card which identify or confirm the specific policy for the insurer.",
         "min": 0,
         "max": "1",
@@ -3027,10 +2387,9 @@
             "human": "All FHIR elements must have a @value or children",
             "expression": "hasValue() or (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+            "source": "Element"
           }
         ],
-        "mustSupport": true,
         "isModifier": false,
         "isSummary": false
       },
@@ -3051,13 +2410,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -3091,24 +2444,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": false,
         "isSummary": false,
         "mapping": [
@@ -3140,24 +2475,6 @@
         "type": [
           {
             "code": "Extension"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
           }
         ],
         "isModifier": true,
@@ -3196,16 +2513,6 @@
             }
           ]
         },
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "binding": {
@@ -3237,16 +2544,6 @@
         "type": [
           {
             "code": "string"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -3284,16 +2581,6 @@
             "code": "string"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -3329,16 +2616,6 @@
             "code": "positiveInt"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true,
         "mapping": [
@@ -3364,16 +2641,6 @@
         "type": [
           {
             "code": "string"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -3422,7 +2689,7 @@
             "human": "All FHIR elements must have a @value or children",
             "expression": "hasValue() or (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+            "source": "Element"
           }
         ],
         "isModifier": false,
@@ -3445,13 +2712,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -3483,24 +2744,6 @@
         "type": [
           {
             "code": "Extension"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
           }
         ],
         "isModifier": false,
@@ -3536,24 +2779,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": true,
         "isModifierReason": "Modifier extensions are expected to modify the meaning or interpretation of the element that contains them",
         "isSummary": true,
@@ -3581,16 +2806,6 @@
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -3630,16 +2845,6 @@
           },
           {
             "code": "Money"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -3690,7 +2895,7 @@
             "human": "All FHIR elements must have a @value or children",
             "expression": "hasValue() or (children().count() > id.count())",
             "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
+            "source": "Element"
           }
         ],
         "isModifier": false,
@@ -3713,13 +2918,7 @@
         },
         "type": [
           {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type",
-                "valueUrl": "string"
-              }
-            ],
-            "code": "http://hl7.org/fhirpath/System.String"
+            "code": "string"
           }
         ],
         "isModifier": false,
@@ -3751,24 +2950,6 @@
         "type": [
           {
             "code": "Extension"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
           }
         ],
         "isModifier": false,
@@ -3804,24 +2985,6 @@
             "code": "Extension"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          },
-          {
-            "key": "ext-1",
-            "severity": "error",
-            "human": "Must have either extensions or value[x], not both",
-            "expression": "extension.exists() != value.exists()",
-            "xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])",
-            "source": "http://hl7.org/fhir/StructureDefinition/Extension"
-          }
-        ],
         "isModifier": true,
         "isModifierReason": "Modifier extensions are expected to modify the meaning or interpretation of the element that contains them",
         "isSummary": true,
@@ -3848,16 +3011,6 @@
         "type": [
           {
             "code": "CodeableConcept"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -3892,16 +3045,6 @@
             "code": "Period"
           }
         ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        ],
         "isModifier": false,
         "isSummary": true
       },
@@ -3922,16 +3065,6 @@
         "type": [
           {
             "code": "boolean"
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -3956,16 +3089,6 @@
             "targetProfile": [
               "http://hl7.org/fhir/StructureDefinition/Contract"
             ]
-          }
-        ],
-        "constraint": [
-          {
-            "key": "ele-1",
-            "severity": "error",
-            "human": "All FHIR elements must have a @value or children",
-            "expression": "hasValue() or (children().count() > id.count())",
-            "xpath": "@value|f:*|h:div",
-            "source": "http://hl7.org/fhir/StructureDefinition/Element"
           }
         ],
         "isModifier": false,
@@ -4000,10 +3123,7 @@
       {
         "id": "Coverage.subscriberId",
         "path": "Coverage.subscriberId",
-        "label": "Health Plan Cardholder ID",
-        "short": "Health Plan Cardholder ID",
-        "comment": "Either *PBM Member ID* (.class.type = 'rxid') or *Subscriber ID* must be populated",
-        "mustSupport": true
+        "comment": "Either *PBM Member ID* (.class.type = 'rxid') or *Subscriber ID* must be populated"
       },
       {
         "id": "Coverage.payor",
@@ -4011,35 +3131,38 @@
         "label": "Payer ID or Ref (TBD)",
         "short": "Payer ID or Ref (TBD)",
         "max": "1",
-        "mustSupport": true
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-payer-Organization"
+            ]
+          }
+        ]
       },
       {
         "id": "Coverage.payor.identifier",
-        "path": "Coverage.payor.identifier",
-        "label": "Payer ID",
-        "short": "Payer ID",
-        "definition": "Payer ID as defined in the participants' environment. E.g., an identifier defined in an eligibility service to represent the payer.",
-        "mustSupport": true
+        "path": "Coverage.payor.identifier"
       },
       {
         "id": "Coverage.payor.identifier.system",
         "path": "Coverage.payor.identifier.system",
         "label": "Payer ID System (TBD)",
         "short": "Payer ID System (TBD)",
-        "mustSupport": false
+        "min": 1,
+        "binding": {
+          "strength": "extensible",
+          "description": "TODO: Payer ID system"
+        }
       },
       {
         "id": "Coverage.payor.identifier.value",
         "path": "Coverage.payor.identifier.value",
-        "label": "Payer ID Value",
-        "short": "Payer ID Value",
-        "min": 1,
-        "mustSupport": true
+        "min": 1
       },
       {
         "id": "Coverage.class",
         "path": "Coverage.class",
-        "label": "Pharmacy coverage identifiers",
         "slicing": {
           "discriminator": [
             {
@@ -4047,26 +3170,20 @@
               "path": "type"
             }
           ],
-          "description": "The value of the .type element indicates the type of coverage identifier  (rxbin=IIN (BIN), rxpcn=PCN, group=Group ID, rxid=PBM Member ID)",
           "ordered": false,
           "rules": "closed"
         },
-        "short": "Pharmacy coverage identifiers",
-        "definition": "Identifiers used by the payer/PBM to located the patient's coverage. IIN (BIN) number, Processor Control Number (PCN), pharmacy benefit Group ID and patient's PBM Member ID",
-        "comment": "Populate with identifiers retrieved from an eligibility service or other source agreed between trading partners",
-        "min": 0,
-        "max": "4",
-        "mustSupport": true
+        "min": 3,
+        "max": "4"
       },
       {
         "id": "Coverage.class:bin",
         "path": "Coverage.class",
         "sliceName": "bin",
-        "label": "IIN (BIN) number",
-        "short": "IIN (BIN) number",
-        "comment": "Populate as agreed between trading partners",
-        "max": "1",
-        "mustSupport": true
+        "label": "BIN",
+        "short": "BIN",
+        "min": 1,
+        "max": "1"
       },
       {
         "id": "Coverage.class:bin.type",
@@ -4086,11 +3203,10 @@
         "id": "Coverage.class:pcn",
         "path": "Coverage.class",
         "sliceName": "pcn",
-        "label": "Processor Control Number (PCN)",
-        "short": "Processor Control Number (PCN)",
-        "comment": "Populate as agreed between trading partners",
-        "max": "1",
-        "mustSupport": true
+        "label": "PCN (IIN)",
+        "short": "PCN (IIN)",
+        "min": 1,
+        "max": "1"
       },
       {
         "id": "Coverage.class:pcn.type",
@@ -4110,12 +3226,10 @@
         "id": "Coverage.class:group-id",
         "path": "Coverage.class",
         "sliceName": "group-id",
-        "label": "Pharmacy Benefit Group ID",
-        "short": "Pharmacy Benefit Group ID",
-        "definition": "The patient's Group ID associated with their pharmacy benefit",
-        "comment": "Populate as agreed between trading partners",
-        "max": "1",
-        "mustSupport": true
+        "label": "Group ID",
+        "short": "Group ID",
+        "min": 1,
+        "max": "1"
       },
       {
         "id": "Coverage.class:group-id.type",
@@ -4137,11 +3251,8 @@
         "sliceName": "pbm-member-id",
         "label": "PBM Member ID",
         "short": "PBM Member ID",
-        "definition": "The patient's pharmacy benefit member ID (which may differ from their overall health insurance ID)",
-        "comment": "Populate as agreed between trading partners",
         "min": 0,
-        "max": "1",
-        "mustSupport": true
+        "max": "1"
       },
       {
         "id": "Coverage.class:pbm-member-id.type",

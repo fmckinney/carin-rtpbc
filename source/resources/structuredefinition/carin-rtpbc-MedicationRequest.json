@@ -1,0 +1,162 @@
+{
+	"resourceType": "StructureDefinition",
+	"id": "carin-rtpbc-MedicationRequest",
+	"meta": {
+		"versionId": "9",
+		"lastUpdated": "2019-10-17T18:33:30.000-04:00"
+	},
+	"text": {
+		"status": "additional",
+		"div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div xmlns=\"http://www.w3.org/1999/xhtml\">This profile constrains the MedicationRequest resource for carrying prescription information required in the consumer real-time pharmacy benefit \ncheck process</div></div>"
+	},
+	"url": "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-MedicationRequest",
+	"version": "0.0.1",
+	"name": "CARINRTPBCMedicationRequest",
+	"title": "CARIN RTPBC MedicationRequest",
+	"status": "draft",
+	"date": "2019-10-15",
+	"publisher": "CARIN Alliance",
+	"description": "This profile constrains the MedicationRequest resource for carrying prescription information required in the consumer real-time pharmacy benefit check process",
+	"fhirVersion": "4.0.0",
+	"kind": "resource",
+	"abstract": false,
+	"type": "MedicationRequest",
+	"baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationRequest",
+	"derivation": "constraint",
+	"differential": {
+		"element": [
+			{
+				"id": "MedicationRequest",
+				"path": "MedicationRequest"
+			},
+			{
+				"id": "MedicationRequest.status",
+				"path": "MedicationRequest.status",
+				"fixedCode": "draft"
+			},
+			{
+				"id": "MedicationRequest.intent",
+				"path": "MedicationRequest.intent",
+				"fixedCode": "proposal"
+			},
+			{
+				"id": "MedicationRequest.medication[x]",
+				"path": "MedicationRequest.medication[x]",
+				"label": "NDC11 or RxNorm",
+				"short": "NDC11 or RxNorm",
+				"min": 1,
+				"max": "1",
+				"type": [
+					{
+						"code": "CodeableConcept"
+					}
+				],
+				"binding": {
+					"strength": "required",
+					"description": "TODO: NDC11 or RxNorm"
+				}
+			},
+			{
+				"id": "MedicationRequest.subject",
+				"path": "MedicationRequest.subject",
+				"type": [
+					{
+						"code": "Reference",
+						"targetProfile": [
+							"http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Patient"
+						]
+					}
+				]
+			},
+			{
+				"id": "MedicationRequest.requester",
+				"path": "MedicationRequest.requester",
+				"min": 1,
+				"type": [
+					{
+						"code": "Reference",
+						"targetProfile": [
+							"http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Practitioner"
+						]
+					}
+				]
+			},
+			{
+				"id": "MedicationRequest.reasonCode",
+				"path": "MedicationRequest.reasonCode",
+				"min": 1
+			},
+			{
+				"id": "MedicationRequest.reasonCode.coding",
+				"path": "MedicationRequest.reasonCode.coding",
+				"min": 1,
+				"max": "*"
+			},
+			{
+				"id": "MedicationRequest.reasonCode.coding.system",
+				"path": "MedicationRequest.reasonCode.coding.system",
+				"label": "ICD10 or SNOMED",
+				"short": "ICD10 or SNOMED",
+				"min": 1,
+				"binding": {
+					"strength": "required",
+					"description": "TODO: ICD10 or SNOMED"
+				}
+			},
+			{
+				"id": "MedicationRequest.reasonCode.coding.code",
+				"path": "MedicationRequest.reasonCode.coding.code",
+				"min": 1
+			},
+			{
+				"id": "MedicationRequest.dispenseRequest",
+				"path": "MedicationRequest.dispenseRequest",
+				"label": "Mandatory dispense request",
+				"short": "Mandatory dispense request",
+				"min": 1
+			},
+			{
+				"id": "MedicationRequest.substitution",
+				"path": "MedicationRequest.substitution",
+				"min": 1
+			},
+			{
+				"id": "MedicationRequest.dispenseRequest.quantity",
+				"path": "MedicationRequest.dispenseRequest.quantity",
+				"min": 1,
+				"max": "1"
+			},
+			{
+				"id": "MedicationRequest.dispenseRequest.expectedSupplyDuration",
+				"path": "MedicationRequest.dispenseRequest.expectedSupplyDuration",
+				"min": 1
+			},
+			{
+				"id": "MedicationRequest.dispenseRequest.quantity.value",
+				"path": "MedicationRequest.dispenseRequest.quantity.value",
+				"min": 1
+			},
+			{
+				"id": "MedicationRequest.dispenseRequest.quantity.unit",
+				"path": "MedicationRequest.dispenseRequest.quantity.unit",
+				"min": 1
+			},
+			{
+				"id": "MedicationRequest.dispenseRequest.quantity.system",
+				"path": "MedicationRequest.dispenseRequest.quantity.system",
+				"label": "NCPDP Billing Units",
+				"short": "NCPDP Billing Units",
+				"min": 1,
+				"binding": {
+					"strength": "required",
+					"description": "TODO: NCPDP Billing Units"
+				}
+			},
+			{
+				"id": "MedicationRequest.dispenseRequest.quantity.code",
+				"path": "MedicationRequest.dispenseRequest.quantity.code",
+				"min": 1
+			}
+		]
+	}
+}

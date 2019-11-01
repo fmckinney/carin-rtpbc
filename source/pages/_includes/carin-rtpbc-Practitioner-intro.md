@@ -4,4 +4,4 @@ layout: default
 active: StructureDefinition-carin-rtpbc-Practitioner-intro
 ---
 
-This profile constrains the Practitioner resource to convey identifying prescriber information required in the consumer real-time pharmacy benefit check (RTPBC) process.
+This profile constrains the Practitioner resource for carrying the prescriber information required in the consumer real-time pharmacy benefit check process.

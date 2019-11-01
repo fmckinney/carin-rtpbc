@@ -3,28 +3,22 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="carin-rtpbc-Patient"/>
   <meta>
-    <versionId value="21"/>
-    <lastUpdated value="2019-10-31T12:31:00.000-05:00"/>
+    <versionId value="6"/>
+    <lastUpdated value="2019-10-17T17:41:20.000-05:00"/>
   </meta>
   <text>
-    <status value="additional"/><div xmlns="http://www.w3.org/1999/xhtml">
-            <div>
-                <div>
-                    <div>This profile constrains the Patient resource for carrying the limited patient information required in the consumer real-time pharmacy benefit 
-check (RTPBC) process. In RTPBC, the sole purpose of patient information is to enable the responding payer/PBM to locate the patient's insurance information. From there, pricing and coverage information is determined based on the patient's member and coverage information maintained by the payer. </div>
-                </div>
-            </div>
-        </div>
+    <status value="additional"/><div xmlns="http://www.w3.org/1999/xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><div>This profile constrains the Patient resource for carrying the patient information required in the consumer real-time pharmacy benefit 
+check process.</div></div></div>
   </text>
-  <url value="http://hl7.org/fhir/us/carin/StructureDefinition/rtpbc-request-patient-info"/>
+  <url value="http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Patient"/>
   <version value="0.1.00-DRAFT"/>
-  <name value="CarinRtpbcRequestPatientInfo"/>
-  <title value="CARIN RTPBC Request Patient Info"/>
+  <name value="CARINRTPBCPatient"/>
+  <title value="CARIN RTPBC Patient"/>
   <status value="draft"/>
   <date value="2019-10-03T00:00:00-05:00"/>
   <publisher value="CARIN Alliance"/>
-  <description value="This profile constrains the Patient resource for carrying the limited patient information required in the consumer real-time pharmacy benefit check (RTPBC) process. In RTPBC, the sole purpose of patient information is to enable the responding payer/PBM to locate the patient&#39;s insurance information. From there, pricing and coverage information is determined based on the patient&#39;s member and coverage information maintained by the payer. "/>
-  <fhirVersion value="4.0.1"/>
+  <description value="This profile constrains the Patient resource for carrying the patient information required in the consumer real-time pharmacy benefit check process."/>
+  <fhirVersion value="4.0.0"/>
   <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
@@ -74,15 +68,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
         <expression value="contained.contained.empty()"/>
         <xpath value="not(parent::f:contained and f:contained)"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
-      </constraint>
-      <constraint>
-        <key value="dom-3"/>
-        <severity value="error"/>
-        <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
-        <xpath value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
+        <source value="DomainResource"/>
       </constraint>
       <constraint>
         <key value="dom-4"/>
@@ -90,15 +76,15 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
         <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
         <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
+        <source value="DomainResource"/>
       </constraint>
       <constraint>
-        <key value="dom-5"/>
+        <key value="dom-3"/>
         <severity value="error"/>
-        <human value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
-        <expression value="contained.meta.security.empty()"/>
-        <xpath value="not(exists(f:contained/*/f:meta/f:security))"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
+        <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
+        <expression value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
+        <xpath value="not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
+        <source value="DomainResource"/>
       </constraint>
       <constraint>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice">
@@ -110,9 +96,17 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <key value="dom-6"/>
         <severity value="warning"/>
         <human value="A resource should have narrative for robust management"/>
-        <expression value="text.`div`.exists()"/>
+        <expression value="text.div.exists()"/>
         <xpath value="exists(f:text/h:div)"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
+        <source value="DomainResource"/>
+      </constraint>
+      <constraint>
+        <key value="dom-5"/>
+        <severity value="error"/>
+        <human value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
+        <expression value="contained.meta.security.empty()"/>
+        <xpath value="not(exists(f:contained/*/f:meta/f:security))"/>
+        <source value="DomainResource"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -142,10 +136,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <max value="1"/>
       </base>
       <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
-        </extension>
-        <code value="http://hl7.org/fhirpath/System.String"/>
+        <code value="id"/>
       </type>
       <isModifier value="false"/>
       <isSummary value="true"/>
@@ -164,14 +155,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Meta"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -190,14 +173,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="uri"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation"/>
       <isSummary value="true"/>
@@ -217,14 +192,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="code"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -261,14 +228,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Narrative"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -318,22 +277,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -359,22 +302,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them"/>
       <isSummary value="false"/>
@@ -398,14 +325,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Identifier"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -442,14 +361,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <code value="boolean"/>
       </type>
       <meaningWhenMissing value="This resource is generally assumed to be active if no value is provided for the active element"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="This element is labelled as a modifier because it is a status element that can indicate that a record should not be treated as valid"/>
       <isSummary value="true"/>
@@ -482,15 +393,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="HumanName"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -519,10 +421,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <max value="1"/>
       </base>
       <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
-        </extension>
-        <code value="http://hl7.org/fhirpath/System.String"/>
+        <code value="string"/>
       </type>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -556,22 +455,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -595,14 +478,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="code"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc.for a current/permanent one"/>
       <isSummary value="true"/>
@@ -612,7 +487,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         </extension>
         <strength value="required"/>
         <description value="The use of a human name."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/name-use|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/name-use|4.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -643,14 +518,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="string"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -664,8 +531,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
     </element>
     <element id="Patient.name.family">
       <path value="Patient.name.family"/>
-      <label value="Patient family name"/>
-      <short value="Patient family name"/>
+      <short value="Family name (often called &#39;Surname&#39;)"/>
       <definition value="The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father."/>
       <comment value="Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures)."/>
       <alias value="surname"/>
@@ -679,15 +545,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="string"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -705,15 +562,13 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
     </element>
     <element id="Patient.name.given">
       <path value="Patient.name.given"/>
-      <label value="Patient given name(s)"/>
-      <short value="Patient given name(s)"/>
-      <definition value="One or more given names of the patient"/>
+      <short value="Given names (not always &#39;first&#39;). Includes middle names"/>
+      <definition value="Given name."/>
       <comment value="If only initials are recorded, they may be used in place of the full name parts. Initials may be separated into multiple given names but often aren&#39;t due to paractical limitations.  This element is not called &quot;first name&quot; since given names do not always come first."/>
       <alias value="first name"/>
       <alias value="middle name"/>
-      <alias value="first name, middle name"/>
       <min value="1"/>
-      <max value="*"/>
+      <max value="2"/>
       <base>
         <path value="HumanName.given"/>
         <min value="0"/>
@@ -723,15 +578,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <code value="string"/>
       </type>
       <orderMeaning value="Given Names appear in the correct order for presenting the name"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -762,14 +608,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <code value="string"/>
       </type>
       <orderMeaning value="Prefixes appear in the correct order for presenting the name"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -800,14 +638,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <code value="string"/>
       </type>
       <orderMeaning value="Suffixes appear in the correct order for presenting the name"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -834,14 +664,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Period"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -873,14 +695,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="ContactPoint"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -898,9 +712,8 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
     </element>
     <element id="Patient.gender">
       <path value="Patient.gender"/>
-      <label value="Patient gender"/>
-      <short value="Patient gender"/>
-      <definition value="The patient&#39;s administrative gender (male, female, other, unknown)"/>
+      <short value="male | female | other | unknown"/>
+      <definition value="Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes."/>
       <comment value="The gender might not match the biological sex as determined by genetics or the individual&#39;s preferred identification. Note that for both humans and particularly animals, there are other legitimate possibilities than male and female, though the vast majority of systems and contexts only support male and female.  Systems providing decision support or enforcing business rules should ideally do this on the basis of Observations dealing with the specific sex or gender aspect of interest (anatomical, chromosomal, social, etc.)  However, because these observations are infrequently recorded, defaulting to the administrative gender is common practice.  Where such defaulting occurs, rule enforcement should allow for the variation between administrative and biological, chromosomal and other gender aspects.  For example, an alert about a hysterectomy on a male should be handled as a warning or overridable error, not a &quot;hard&quot; error.  See the Patient Gender and Sex section for additional information about communicating patient gender and sex."/>
       <requirements value="Needed for identification of the individual, in combination with (at least) name and birth date."/>
       <min value="1"/>
@@ -913,20 +726,18 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="code"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdministrativeGender"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+          <valueBoolean value="true"/>
+        </extension>
         <strength value="required"/>
-        <description value="Administrative gender"/>
+        <description value="The gender of a person used for administrative purposes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender|4.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -943,8 +754,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
     </element>
     <element id="Patient.birthDate">
       <path value="Patient.birthDate"/>
-      <label value="Patient birth date"/>
-      <short value="Patient birth date"/>
+      <short value="The date of birth for the individual"/>
       <definition value="The date of birth for the individual."/>
       <comment value="At least an estimated year should be provided as a guess if the real DOB is unknown  There is a standard extension &quot;patient-birthTime&quot; available that should be used where Time is required (such as in maternity/infant care systems)."/>
       <requirements value="Age of the individual drives many clinical processes."/>
@@ -958,15 +768,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="date"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1005,14 +806,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="dateTime"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different."/>
       <isSummary value="true"/>
@@ -1031,13 +824,12 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
     </element>
     <element id="Patient.address">
       <path value="Patient.address"/>
-      <label value="Patient address"/>
-      <short value="Patient address"/>
-      <definition value="The patient&#39;s home address"/>
-      <comment value="Address may be used by the payer to identify the patient&#39;s insurance records"/>
+      <short value="An address for the individual"/>
+      <definition value="An address for the individual."/>
+      <comment value="Include patient address? NCPDP provider RTPBC doesn&#39;t include it."/>
       <requirements value="May need to keep track of patient addresses for contacting, billing or reporting requirements and also to help with identification."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <base>
         <path value="Patient.address"/>
         <min value="0"/>
@@ -1046,15 +838,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Address"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1068,544 +851,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <mapping>
         <identity value="cda"/>
         <map value=".addr"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.id">
-      <path value="Patient.address.id"/>
-      <representation value="xmlAttr"/>
-      <short value="Unique id for inter-element referencing"/>
-      <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
-        </extension>
-        <code value="http://hl7.org/fhirpath/System.String"/>
-      </type>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.extension">
-      <path value="Patient.address.extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <description value="Extensions are always sliced by (at least) url"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.use">
-      <path value="Patient.address.use"/>
-      <short value="home | work | temp | old | billing - purpose of this address"/>
-      <definition value="The purpose of this address."/>
-      <comment value="Applications can assume that an address is current unless it explicitly says that it is temporary or old."/>
-      <requirements value="Allows an appropriate address to be chosen from a list of many."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.use"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <example>
-        <label value="General"/>
-        <valueCode value="home"/>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <isModifier value="true"/>
-      <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old address etc.for a current/permanent one"/>
-      <isSummary value="true"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="AddressUse"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The use of an address."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/address-use|4.0.1"/>
-      </binding>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.7"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="unique(./use)"/>
-      </mapping>
-      <mapping>
-        <identity value="servd"/>
-        <map value="./AddressPurpose"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.type">
-      <path value="Patient.address.type"/>
-      <short value="postal | physical | both"/>
-      <definition value="Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both."/>
-      <comment value="The definition of Address states that &quot;address is intended to describe postal addresses, not physical locations&quot;. However, many applications track whether an address has a dual purpose of being a location that can be visited as well as being a valid delivery destination, and Postal addresses are often used as proxies for physical locations (also see the [Location](http://hl7.org/fhir/R4/location.html#) resource)."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.type"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <example>
-        <label value="General"/>
-        <valueCode value="both"/>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="AddressType"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The type of an address (physical / postal)."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/address-type|4.0.1"/>
-      </binding>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.18"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="unique(./use)"/>
-      </mapping>
-      <mapping>
-        <identity value="vcard"/>
-        <map value="address type parameter"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.text">
-      <path value="Patient.address.text"/>
-      <short value="Text representation of the address"/>
-      <definition value="Specifies the entire address as it should be displayed e.g. on a postal label. This may be provided instead of or as well as the specific parts."/>
-      <comment value="Can provide both a text representation and parts. Applications updating an address SHALL ensure that  when both text and parts are present,  no content is included in the text that isn&#39;t found in a part."/>
-      <requirements value="A renderable, unencoded form."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.text"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <example>
-        <label value="General"/>
-        <valueString value="137 Nowhere Street, Erewhon 9132"/>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.1 + XAD.2 + XAD.3 + XAD.4 + XAD.5 + XAD.6"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="./formatted"/>
-      </mapping>
-      <mapping>
-        <identity value="vcard"/>
-        <map value="address label parameter"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.line">
-      <path value="Patient.address.line"/>
-      <short value="Street name, number, direction &amp; P.O. Box etc."/>
-      <definition value="This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information."/>
-      <min value="1"/>
-      <max value="*"/>
-      <base>
-        <path value="Address.line"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <orderMeaning value="The order in which lines should appear in an address label"/>
-      <example>
-        <label value="General"/>
-        <valueString value="137 Nowhere Street"/>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.1 + XAD.2 (note: XAD.1 and XAD.2 have different meanings for a company address than for a person address)"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="AD.part[parttype = AL]"/>
-      </mapping>
-      <mapping>
-        <identity value="vcard"/>
-        <map value="street"/>
-      </mapping>
-      <mapping>
-        <identity value="servd"/>
-        <map value="./StreetAddress (newline delimitted)"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.city">
-      <path value="Patient.address.city"/>
-      <short value="Name of city, town etc."/>
-      <definition value="The name of the city, town, suburb, village or other community or delivery center."/>
-      <alias value="Municpality"/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.city"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <example>
-        <label value="General"/>
-        <valueString value="Erewhon"/>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.3"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="AD.part[parttype = CTY]"/>
-      </mapping>
-      <mapping>
-        <identity value="vcard"/>
-        <map value="locality"/>
-      </mapping>
-      <mapping>
-        <identity value="servd"/>
-        <map value="./Jurisdiction"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.district">
-      <path value="Patient.address.district"/>
-      <short value="District name (aka county)"/>
-      <definition value="The name of the administrative area (county)."/>
-      <comment value="District is sometimes known as county, but in some regions &#39;county&#39; is used in place of city (municipality), so county name should be conveyed in city instead."/>
-      <alias value="County"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.district"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <example>
-        <label value="General"/>
-        <valueString value="Madison"/>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.9"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="AD.part[parttype = CNT | CPA]"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.state">
-      <path value="Patient.address.state"/>
-      <short value="Sub-unit of country (abbreviations ok)"/>
-      <definition value="Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (e.g. US 2 letter state codes)."/>
-      <alias value="Province"/>
-      <alias value="Territory"/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.state"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <binding>
-        <strength value="extensible"/>
-        <description value="Two Letter USPS alphabetic codes"/>
-      </binding>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.4"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="AD.part[parttype = STA]"/>
-      </mapping>
-      <mapping>
-        <identity value="vcard"/>
-        <map value="region"/>
-      </mapping>
-      <mapping>
-        <identity value="servd"/>
-        <map value="./Region"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.postalCode">
-      <path value="Patient.address.postalCode"/>
-      <short value="Postal code for area"/>
-      <definition value="A postal code designating a region defined by the postal service."/>
-      <alias value="Zip"/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.postalCode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <example>
-        <label value="General"/>
-        <valueString value="9132"/>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.5"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="AD.part[parttype = ZIP]"/>
-      </mapping>
-      <mapping>
-        <identity value="vcard"/>
-        <map value="code"/>
-      </mapping>
-      <mapping>
-        <identity value="servd"/>
-        <map value="./PostalIdentificationCode"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.country">
-      <path value="Patient.address.country"/>
-      <short value="Country (e.g. can be ISO 3166 2 or 3 letter code)"/>
-      <definition value="Country - a nation as commonly understood or generally accepted."/>
-      <comment value="Populate when not a US address"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.country"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <binding>
-        <strength value="required"/>
-        <description value="ISO 3166 2-character country codes"/>
-      </binding>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.6"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="AD.part[parttype = CNT]"/>
-      </mapping>
-      <mapping>
-        <identity value="vcard"/>
-        <map value="country"/>
-      </mapping>
-      <mapping>
-        <identity value="servd"/>
-        <map value="./Country"/>
-      </mapping>
-    </element>
-    <element id="Patient.address.period">
-      <path value="Patient.address.period"/>
-      <short value="Time period when address was/is in use"/>
-      <definition value="Time period when address was/is in use."/>
-      <requirements value="Allows addresses to be placed in historical context."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Address.period"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="Period"/>
-      </type>
-      <example>
-        <label value="General"/>
-        <valuePeriod>
-          <start value="2010-03-23T00:00:00-05:00"/>
-          <end value="2010-07-01T00:00:00-05:00"/>
-        </valuePeriod>
-      </example>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="XAD.12 / XAD.13 + XAD.14"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="./usablePeriod[type=&quot;IVL&lt;TS&gt;&quot;]"/>
-      </mapping>
-      <mapping>
-        <identity value="servd"/>
-        <map value="./StartDate and ./EndDate"/>
       </mapping>
     </element>
     <element id="Patient.maritalStatus">
@@ -1623,14 +868,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="CodeableConcept"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -1676,14 +913,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="integer"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1715,14 +944,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Attachment"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1763,7 +984,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+        <source value="Element"/>
       </constraint>
       <constraint>
         <key value="pat-1"/>
@@ -1796,10 +1017,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <max value="1"/>
       </base>
       <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
-        </extension>
-        <code value="http://hl7.org/fhirpath/System.String"/>
+        <code value="string"/>
       </type>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -1825,22 +1043,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1867,22 +1069,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them"/>
       <isSummary value="true"/>
@@ -1906,14 +1092,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="CodeableConcept"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -1952,14 +1130,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="HumanName"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1991,14 +1161,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="ContactPoint"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2029,14 +1191,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Address"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2067,14 +1221,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="code"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -2086,7 +1232,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         </extension>
         <strength value="required"/>
         <description value="The gender of a person used for administrative purposes."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender|4.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -2118,14 +1264,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
       <condition value="pat-1"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2155,14 +1293,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Period"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2196,7 +1326,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+        <source value="Element"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -2222,10 +1352,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <max value="1"/>
       </base>
       <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
-        </extension>
-        <code value="http://hl7.org/fhirpath/System.String"/>
+        <code value="string"/>
       </type>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -2251,22 +1378,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2293,22 +1404,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them"/>
       <isSummary value="true"/>
@@ -2333,14 +1428,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="CodeableConcept"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -2386,14 +1473,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="boolean"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2428,14 +1507,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/PractitionerRole"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2468,14 +1539,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2509,7 +1572,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+        <source value="Element"/>
       </constraint>
       <isModifier value="true"/>
       <isModifierReason value="This element is labeled as a modifier because it might not be the main Patient resource, and the referenced patient should be used instead of this Patient record. This is when the link.type value is &#39;replaced-by&#39;"/>
@@ -2536,10 +1599,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <max value="1"/>
       </base>
       <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
-        </extension>
-        <code value="http://hl7.org/fhirpath/System.String"/>
+        <code value="string"/>
       </type>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -2565,22 +1625,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2607,22 +1651,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="Extension"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them"/>
       <isSummary value="true"/>
@@ -2651,14 +1679,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2688,14 +1708,6 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <type>
         <code value="code"/>
       </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -2704,7 +1716,7 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
         </extension>
         <strength value="required"/>
         <description value="The type of link between this patient resource and another patient resource."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/link-type|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/link-type|4.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -2724,91 +1736,29 @@ check (RTPBC) process. In RTPBC, the sole purpose of patient information is to e
       <path value="Patient.name"/>
       <min value="1"/>
       <max value="1"/>
-      <mustSupport value="true"/>
     </element>
     <element id="Patient.name.family">
       <path value="Patient.name.family"/>
-      <label value="Patient family name"/>
-      <short value="Patient family name"/>
       <min value="1"/>
       <max value="1"/>
-      <mustSupport value="true"/>
     </element>
     <element id="Patient.name.given">
       <path value="Patient.name.given"/>
-      <label value="Patient given name(s)"/>
-      <short value="Patient given name(s)"/>
-      <definition value="One or more given names of the patient"/>
-      <alias value="first name, middle name"/>
       <min value="1"/>
-      <mustSupport value="true"/>
+      <max value="2"/>
     </element>
     <element id="Patient.gender">
       <path value="Patient.gender"/>
-      <label value="Patient gender"/>
-      <short value="Patient gender"/>
-      <definition value="The patient&#39;s administrative gender (male, female, other, unknown)"/>
       <min value="1"/>
-      <max value="1"/>
-      <mustSupport value="true"/>
-      <binding>
-        <strength value="required"/>
-        <description value="Administrative gender"/>
-      </binding>
     </element>
     <element id="Patient.birthDate">
       <path value="Patient.birthDate"/>
-      <label value="Patient birth date"/>
-      <short value="Patient birth date"/>
       <min value="1"/>
-      <mustSupport value="true"/>
     </element>
     <element id="Patient.address">
       <path value="Patient.address"/>
-      <label value="Patient address"/>
-      <short value="Patient address"/>
-      <definition value="The patient&#39;s home address"/>
-      <comment value="Address may be used by the payer to identify the patient&#39;s insurance records"/>
-      <max value="1"/>
-      <mustSupport value="true"/>
-    </element>
-    <element id="Patient.address.line">
-      <path value="Patient.address.line"/>
-      <min value="1"/>
-      <max value="*"/>
-      <mustSupport value="true"/>
-    </element>
-    <element id="Patient.address.city">
-      <path value="Patient.address.city"/>
-      <min value="1"/>
-      <max value="1"/>
-      <mustSupport value="true"/>
-    </element>
-    <element id="Patient.address.state">
-      <path value="Patient.address.state"/>
-      <min value="1"/>
-      <max value="1"/>
-      <mustSupport value="true"/>
-      <binding>
-        <strength value="extensible"/>
-        <description value="Two Letter USPS alphabetic codes"/>
-      </binding>
-    </element>
-    <element id="Patient.address.postalCode">
-      <path value="Patient.address.postalCode"/>
-      <min value="1"/>
-      <max value="1"/>
-      <mustSupport value="true"/>
-    </element>
-    <element id="Patient.address.country">
-      <path value="Patient.address.country"/>
-      <comment value="Populate when not a US address"/>
+      <comment value="Include patient address? NCPDP provider RTPBC doesn&#39;t include it."/>
       <min value="0"/>
-      <mustSupport value="true"/>
-      <binding>
-        <strength value="required"/>
-        <description value="ISO 3166 2-character country codes"/>
-      </binding>
     </element>
   </differential>
 </StructureDefinition>

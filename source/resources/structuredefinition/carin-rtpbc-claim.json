@@ -1,0 +1,515 @@
+{
+	"resourceType": "StructureDefinition",
+	"id": "carin-rtpbc-claim",
+	"meta": {
+		"versionId": "40",
+		"lastUpdated": "2019-10-25T12:56:42.000-04:00"
+	},
+	"text": {
+		"status": "additional",
+		"div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div xmlns=\"http://www.w3.org/1999/xhtml\">This profile constrains the Claim resource so that it can serve as the <i>RTPBC Request</i> in the consumer real-time pharmacy benefit \ncheck process</div></div>"
+	},
+	"url": "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Claim",
+	"version": "0.0.1",
+	"name": "CARINRTPBCClaim",
+	"title": "CARIN RTPBC Request using Claim",
+	"status": "draft",
+	"date": "2019-10-03",
+	"publisher": "CARIN Alliance",
+	"description": "This profile constrains the Claim resource so that it can serve as the *RTPBC Request* in the consumer real-time pharmacy benefit check process",
+	"fhirVersion": "4.0.0",
+	"kind": "resource",
+	"abstract": false,
+	"type": "Claim",
+	"baseDefinition": "http://hl7.org/fhir/StructureDefinition/Claim",
+	"derivation": "constraint",
+	"differential": {
+		"element": [
+			{
+				"id": "Claim",
+				"path": "Claim"
+			},
+			{
+				"id": "Claim.id",
+				"path": "Claim.id",
+				"min": 1
+			},
+			{
+				"id": "Claim.identifier",
+				"path": "Claim.identifier",
+				"label": "Mandatory RTPBC request ID unique to the submitter",
+				"short": "Mandatory unique request ID",
+				"min": 1,
+				"max": "1"
+			},
+			{
+				"id": "Claim.identifier.system",
+				"path": "Claim.identifier.system",
+				"label": "Submitter's RTPBC uri",
+				"short": "Submitter's RTPBC uri",
+				"min": 1,
+				"binding": {
+					"strength": "example",
+					"description": "The submitting app's RTPBC uri"
+				}
+			},
+			{
+				"id": "Claim.identifier.value",
+				"path": "Claim.identifier.value",
+				"min": 1
+			},
+			{
+				"id": "Claim.status",
+				"path": "Claim.status",
+				"fixedCode": "active"
+			},
+			{
+				"id": "Claim.type",
+				"path": "Claim.type"
+			},
+			{
+				"id": "Claim.subType",
+				"path": "Claim.subType",
+				"max": "0"
+			},
+			{
+				"id": "Claim.use",
+				"path": "Claim.use",
+				"fixedCode": "predetermination"
+			},
+			{
+				"id": "Claim.patient",
+				"path": "Claim.patient",
+				"type": [
+					{
+						"code": "Reference",
+						"targetProfile": [
+							"http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Patient"
+						]
+					}
+				]
+			},
+			{
+				"id": "Claim.billablePeriod",
+				"path": "Claim.billablePeriod",
+				"max": "0"
+			},
+			{
+				"id": "Claim.enterer",
+				"path": "Claim.enterer",
+				"max": "0"
+			},
+			{
+				"id": "Claim.type.coding",
+				"path": "Claim.type.coding",
+				"min": 1
+			},
+			{
+				"id": "Claim.type.coding.system",
+				"path": "Claim.type.coding.system",
+				"min": 1,
+				"fixedUri": "http://terminology.hl7.org/CodeSystem/claim-type"
+			},
+			{
+				"id": "Claim.type.coding.code",
+				"path": "Claim.type.coding.code",
+				"min": 1,
+				"fixedCode": "pharmacy"
+			},
+			{
+				"id": "Claim.insurer",
+				"path": "Claim.insurer",
+				"label": "Mandatory Payer ID or Ref (TBD)",
+				"short": "Mandatory Payer ID or Ref (TBD)",
+				"min": 1,
+				"type": [
+					{
+						"code": "Reference",
+						"targetProfile": [
+							"http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-payer-Organization"
+						]
+					}
+				]
+			},
+			{
+				"id": "Claim.provider",
+				"path": "Claim.provider",
+				"type": [
+					{
+						"code": "Reference",
+						"targetProfile": [
+							"http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-pharmacy-Organization"
+						]
+					}
+				]
+			},
+			{
+				"id": "Claim.provider.identifier",
+				"path": "Claim.provider.identifier",
+				"label": "Mandatory pharmacy ID",
+				"short": "Mandatory pharmacy ID",
+				"min": 1
+			},
+			{
+				"id": "Claim.provider.display",
+				"path": "Claim.provider.display",
+				"label": "Pharmacy name",
+				"short": "Pharmacy name",
+				"min": 1
+			},
+			{
+				"id": "Claim.provider.identifier.system",
+				"path": "Claim.provider.identifier.system",
+				"label": "Pharmacy NPI or NCPDP ID (TODO)",
+				"short": "NPI or NCPDP ID",
+				"min": 1,
+				"binding": {
+					"strength": "required",
+					"description": "TODO: NPI or NCPDP ID"
+				}
+			},
+			{
+				"id": "Claim.priority",
+				"path": "Claim.priority",
+				"fixedCode": "normal"
+			},
+			{
+				"id": "Claim.fundsReserve",
+				"path": "Claim.fundsReserve",
+				"max": "0"
+			},
+			{
+				"id": "Claim.related",
+				"path": "Claim.related",
+				"max": "0"
+			},
+			{
+				"id": "Claim.originalPrescription",
+				"path": "Claim.originalPrescription",
+				"max": "0"
+			},
+			{
+				"id": "Claim.payee",
+				"path": "Claim.payee",
+				"max": "0"
+			},
+			{
+				"id": "Claim.referral",
+				"path": "Claim.referral",
+				"max": "0"
+			},
+			{
+				"id": "Claim.facility",
+				"path": "Claim.facility",
+				"max": "0"
+			},
+			{
+				"id": "Claim.careTeam",
+				"path": "Claim.careTeam",
+				"label": "Mandatory prescriber",
+				"short": "Mandatory prescriber",
+				"min": 1,
+				"max": "1"
+			},
+			{
+				"id": "Claim.supportingInfo",
+				"path": "Claim.supportingInfo",
+				"max": "0"
+			},
+			{
+				"id": "Claim.careTeam.sequence",
+				"path": "Claim.careTeam.sequence",
+				"fixedInteger": 1
+			},
+			{
+				"id": "Claim.careTeam.provider",
+				"path": "Claim.careTeam.provider",
+				"type": [
+					{
+						"code": "Reference",
+						"targetProfile": [
+							"http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Practitioner"
+						]
+					}
+				]
+			},
+			{
+				"id": "Claim.careTeam.provider.identifier",
+				"path": "Claim.careTeam.provider.identifier",
+				"label": "Mandatory prescriber NPI",
+				"short": "Mandatory prescriber NPI",
+				"min": 1
+			},
+			{
+				"id": "Claim.careTeam.provider.identifier.system",
+				"path": "Claim.careTeam.provider.identifier.system",
+				"min": 1,
+				"binding": {
+					"strength": "required",
+					"description": "TODO: NPI"
+				}
+			},
+			{
+				"id": "Claim.careTeam.provider.identifier.value",
+				"path": "Claim.careTeam.provider.identifier.value",
+				"min": 1
+			},
+			{
+				"id": "Claim.diagnosis",
+				"path": "Claim.diagnosis",
+				"label": "Max 1 diagnosis (with 1 or 2 codings)",
+				"short": "Max 1 diagnosis (1-2 codings)",
+				"max": "1",
+				"mustSupport": true
+			},
+			{
+				"id": "Claim.procedure",
+				"path": "Claim.procedure",
+				"max": "0"
+			},
+			{
+				"id": "Claim.diagnosis.sequence",
+				"path": "Claim.diagnosis.sequence",
+				"fixedInteger": 1
+			},
+			{
+				"id": "Claim.diagnosis.diagnosis[x]",
+				"path": "Claim.diagnosis.diagnosis[x]",
+				"label": "ICD or SNOMED",
+				"short": "ICD or SNOMED",
+				"type": [
+					{
+						"code": "CodeableConcept"
+					}
+				],
+				"mustSupport": false,
+				"binding": {
+					"strength": "required",
+					"description": "TODO: ICD or SNOMED binding"
+				}
+			},
+			{
+				"id": "Claim.insurance",
+				"path": "Claim.insurance"
+			},
+			{
+				"id": "Claim.accident",
+				"path": "Claim.accident",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item",
+				"path": "Claim.item",
+				"label": "Max 1 item per request",
+				"short": "Max 1 item per request",
+				"min": 1,
+				"max": "1"
+			},
+			{
+				"id": "Claim.total",
+				"path": "Claim.total",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.sequence",
+				"path": "Claim.item.sequence",
+				"fixedInteger": 1
+			},
+			{
+				"id": "Claim.item.careTeamSequence",
+				"path": "Claim.item.careTeamSequence",
+				"label": "Reference to .careTeam.sequence.@id",
+				"short": "Ref to .careTeam.sequence.@id",
+				"min": 1,
+				"max": "1"
+			},
+			{
+				"id": "Claim.item.diagnosisSequence",
+				"path": "Claim.item.diagnosisSequence",
+				"label": "Reference to .diagnosis.sequence.@id",
+				"short": "Ref to .diagnosis.sequence.@id",
+				"mustSupport": true
+			},
+			{
+				"id": "Claim.item.revenue",
+				"path": "Claim.item.revenue",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.category",
+				"path": "Claim.item.category",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.productOrService",
+				"path": "Claim.item.productOrService"
+			},
+			{
+				"id": "Claim.item.modifier",
+				"path": "Claim.item.modifier",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.programCode",
+				"path": "Claim.item.programCode",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.serviced[x]",
+				"path": "Claim.item.serviced[x]",
+				"label": "Predetermination is processed as of the request date",
+				"short": "Predetermination as of request date",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.location[x]",
+				"path": "Claim.item.location[x]",
+				"label": "NCPDP patient residence code",
+				"short": "NCPDP Patient residence code",
+				"type": [
+					{
+						"code": "CodeableConcept"
+					}
+				],
+				"mustSupport": true,
+				"binding": {
+					"strength": "required",
+					"description": "TODO: NCPDP patient residence code"
+				}
+			},
+			{
+				"id": "Claim.item.quantity",
+				"path": "Claim.item.quantity",
+				"label": "Prescribed quantity",
+				"short": "Prescribed qty",
+				"min": 1
+			},
+			{
+				"id": "Claim.item.unitPrice",
+				"path": "Claim.item.unitPrice",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.factor",
+				"path": "Claim.item.factor",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.net",
+				"path": "Claim.item.net",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.bodySite",
+				"path": "Claim.item.bodySite",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.subSite",
+				"path": "Claim.item.subSite",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.encounter",
+				"path": "Claim.item.encounter",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.detail",
+				"path": "Claim.item.detail",
+				"max": "0"
+			},
+			{
+				"id": "Claim.item.quantity.value",
+				"path": "Claim.item.quantity.value",
+				"min": 1
+			},
+			{
+				"id": "Claim.item.quantity.unit",
+				"path": "Claim.item.quantity.unit",
+				"label": "Unit code matching coded value",
+				"short": "Unit code",
+				"min": 1,
+				"binding": {
+					"strength": "required",
+					"description": "Billing quantity unity of measure",
+					"valueSet": "http://hl7.org/fhir/us/carin/ValueSet/carin-rtpbc-billing-quantity-unit-of-measure"
+				}
+			},
+			{
+				"id": "Claim.item.productOrService.coding",
+				"path": "Claim.item.productOrService.coding",
+				"min": 1
+			},
+			{
+				"id": "Claim.item.productOrService.coding.system",
+				"path": "Claim.item.productOrService.coding.system",
+				"label": "NDC11 or RxNorm (TODO-constrain)",
+				"short": "NDC11 or RxNorm",
+				"min": 1,
+				"binding": {
+					"strength": "required",
+					"description": "TODO: Either NDC11 or RxNorm"
+				}
+			},
+			{
+				"id": "Claim.item.productOrService.coding.code",
+				"path": "Claim.item.productOrService.coding.code",
+				"min": 1
+			},
+			{
+				"id": "Claim.item.productOrService.coding.display",
+				"path": "Claim.item.productOrService.coding.display",
+				"label": "Drug name, strength, dose form",
+				"short": "Drug name, strength, dose form",
+				"min": 1
+			},
+			{
+				"id": "Claim.insurance.sequence",
+				"path": "Claim.insurance.sequence",
+				"fixedInteger": 1
+			},
+			{
+				"id": "Claim.insurance.focal",
+				"path": "Claim.insurance.focal",
+				"fixedBoolean": true
+			},
+			{
+				"id": "Claim.insurance.coverage",
+				"path": "Claim.insurance.coverage",
+				"type": [
+					{
+						"code": "Reference",
+						"targetProfile": [
+							"http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Coverage"
+						]
+					}
+				]
+			},
+			{
+				"id": "Claim.insurer.identifier",
+				"path": "Claim.insurer.identifier",
+				"label": "Mandatory Payer ID (TBD)",
+				"short": "TBD"
+			},
+			{
+				"id": "Claim.insurer.identifier.system",
+				"path": "Claim.insurer.identifier.system",
+				"label": "Payer ID System (TBD)",
+				"short": "Payer ID System (TBD)",
+				"min": 1,
+				"binding": {
+					"strength": "extensible",
+					"description": "TODO: Payer ID system TBD"
+				}
+			},
+			{
+				"id": "Claim.insurer.identifier.value",
+				"path": "Claim.insurer.identifier.value",
+				"label": "Payer ID (TBD)",
+				"short": "TBD",
+				"min": 1
+			}
+		]
+	}
+}

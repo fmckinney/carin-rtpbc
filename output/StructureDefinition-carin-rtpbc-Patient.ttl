@@ -9,22 +9,22 @@
   fhir:nodeRole fhir:treeRoot;
   fhir:Resource.id [ fhir:value "carin-rtpbc-Patient"];
   fhir:Resource.meta [
-     fhir:Meta.versionId [ fhir:value "21" ];
-     fhir:Meta.lastUpdated [ fhir:value "2019-10-31T12:31:00.000-05:00"^^xsd:dateTime ]
+     fhir:Meta.versionId [ fhir:value "6" ];
+     fhir:Meta.lastUpdated [ fhir:value "2019-10-17T17:41:20.000-05:00"^^xsd:dateTime ]
   ];
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "additional" ];
-     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n            <div>\n                <div>\n                    <div>This profile constrains the Patient resource for carrying the limited patient information required in the consumer real-time pharmacy benefit \ncheck (RTPBC) process. In RTPBC, the sole purpose of patient information is to enable the responding payer/PBM to locate the patient's insurance information. From there, pricing and coverage information is determined based on the patient's member and coverage information maintained by the payer. </div>\n                </div>\n            </div>\n        </div>"
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><div xmlns=\"http://www.w3.org/1999/xhtml\"><div>This profile constrains the Patient resource for carrying the patient information required in the consumer real-time pharmacy benefit \ncheck process.</div></div></div>"
   ];
-  fhir:StructureDefinition.url [ fhir:value "http://hl7.org/fhir/us/carin/StructureDefinition/rtpbc-request-patient-info"];
+  fhir:StructureDefinition.url [ fhir:value "http://hl7.org/fhir/us/carin/StructureDefinition/carin-rtpbc-Patient"];
   fhir:StructureDefinition.version [ fhir:value "0.1.00-DRAFT"];
-  fhir:StructureDefinition.name [ fhir:value "CarinRtpbcRequestPatientInfo"];
-  fhir:StructureDefinition.title [ fhir:value "CARIN RTPBC Request Patient Info"];
+  fhir:StructureDefinition.name [ fhir:value "CARINRTPBCPatient"];
+  fhir:StructureDefinition.title [ fhir:value "CARIN RTPBC Patient"];
   fhir:StructureDefinition.status [ fhir:value "draft"];
   fhir:StructureDefinition.date [ fhir:value "2019-10-03T00:00:00-05:00"^^xsd:dateTime];
   fhir:StructureDefinition.publisher [ fhir:value "CARIN Alliance"];
-  fhir:StructureDefinition.description [ fhir:value "This profile constrains the Patient resource for carrying the limited patient information required in the consumer real-time pharmacy benefit check (RTPBC) process. In RTPBC, the sole purpose of patient information is to enable the responding payer/PBM to locate the patient's insurance information. From there, pricing and coverage information is determined based on the patient's member and coverage information maintained by the payer. "];
-  fhir:StructureDefinition.fhirVersion [ fhir:value "4.0.1"];
+  fhir:StructureDefinition.description [ fhir:value "This profile constrains the Patient resource for carrying the patient information required in the consumer real-time pharmacy benefit check process."];
+  fhir:StructureDefinition.fhirVersion [ fhir:value "4.0.0"];
   fhir:StructureDefinition.mapping [
      fhir:index 0;
      fhir:StructureDefinition.mapping.identity [ fhir:value "rim" ];
@@ -84,45 +84,25 @@
          fhir:ElementDefinition.constraint.human [ fhir:value "If the resource is contained in another resource, it SHALL NOT contain nested Resources" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "contained.contained.empty()" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "not(parent::f:contained and f:contained)" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/DomainResource";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/DomainResource>
-         ]
+         fhir:ElementDefinition.constraint.source [ fhir:value "DomainResource" ]
        ], [
          fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "dom-3" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/DomainResource";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/DomainResource>
-         ]
-       ], [
-         fhir:index 2;
          fhir:ElementDefinition.constraint.key [ fhir:value "dom-4" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/DomainResource";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/DomainResource>
-         ]
+         fhir:ElementDefinition.constraint.source [ fhir:value "DomainResource" ]
+       ], [
+         fhir:index 2;
+         fhir:ElementDefinition.constraint.key [ fhir:value "dom-3" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))" ];
+         fhir:ElementDefinition.constraint.source [ fhir:value "DomainResource" ]
        ], [
          fhir:index 3;
-         fhir:ElementDefinition.constraint.key [ fhir:value "dom-5" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "If a resource is contained in another resource, it SHALL NOT have a security label" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "contained.meta.security.empty()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:contained/*/f:meta/f:security))" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/DomainResource";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/DomainResource>
-         ]
-       ], [
-         fhir:index 4;
          fhir:Element.extension [
            fhir:index 0;
            fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice" ];
@@ -135,12 +115,17 @@
          fhir:ElementDefinition.constraint.key [ fhir:value "dom-6" ];
          fhir:ElementDefinition.constraint.severity [ fhir:value "warning" ];
          fhir:ElementDefinition.constraint.human [ fhir:value "A resource should have narrative for robust management" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "text.`div`.exists()" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "text.div.exists()" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:text/h:div)" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/DomainResource";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/DomainResource>
-         ]
+         fhir:ElementDefinition.constraint.source [ fhir:value "DomainResource" ]
+       ], [
+         fhir:index 4;
+         fhir:ElementDefinition.constraint.key [ fhir:value "dom-5" ];
+         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
+         fhir:ElementDefinition.constraint.human [ fhir:value "If a resource is contained in another resource, it SHALL NOT have a security label" ];
+         fhir:ElementDefinition.constraint.expression [ fhir:value "contained.meta.security.empty()" ];
+         fhir:ElementDefinition.constraint.xpath [ fhir:value "not(exists(f:contained/*/f:meta/f:security))" ];
+         fhir:ElementDefinition.constraint.source [ fhir:value "DomainResource" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -173,12 +158,7 @@
        ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type" ];
-           fhir:Extension.valueUrl [ fhir:value "string" ]
-         ];
-         fhir:ElementDefinition.type.code [ fhir:value "http://hl7.org/fhirpath/System.String" ]
+         fhir:ElementDefinition.type.code [ fhir:value "id" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ]
@@ -198,18 +178,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Meta" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ]
@@ -231,18 +199,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "uri" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation" ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ]
@@ -263,18 +219,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -332,18 +276,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Narrative" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -412,29 +344,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -468,29 +377,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them" ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -516,18 +402,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Identifier" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -568,18 +442,6 @@
          fhir:ElementDefinition.type.code [ fhir:value "boolean" ]
        ];
        fhir:ElementDefinition.meaningWhenMissing [ fhir:value "This resource is generally assumed to be active if no value is provided for the active element" ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "This element is labelled as a modifier because it is a status element that can indicate that a record should not be treated as valid" ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -615,19 +477,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "HumanName" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -662,12 +511,7 @@
        ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type" ];
-           fhir:Extension.valueUrl [ fhir:value "string" ]
-         ];
-         fhir:ElementDefinition.type.code [ fhir:value "http://hl7.org/fhirpath/System.String" ]
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -710,29 +554,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -759,18 +580,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old name etc.for a current/permanent one" ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -783,8 +592,8 @@
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The use of a human name." ];
          fhir:ElementDefinition.binding.valueSet [
-           fhir:value "http://hl7.org/fhir/ValueSet/name-use|4.0.1";
-           fhir:link <http://hl7.org/fhir/ValueSet/name-use|4.0.1>
+           fhir:value "http://hl7.org/fhir/ValueSet/name-use|4.0.0";
+           fhir:link <http://hl7.org/fhir/ValueSet/name-use|4.0.0>
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -819,18 +628,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -846,8 +643,7 @@
        fhir:index 16;
        fhir:Element.id [ fhir:value "Patient.name.family" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.name.family" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient family name" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient family name" ];
+       fhir:ElementDefinition.short [ fhir:value "Family name (often called 'Surname')" ];
        fhir:ElementDefinition.definition [ fhir:value "The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father." ];
        fhir:ElementDefinition.comment [ fhir:value "Family Name may be decomposed into specific parts using extensions (de, nl, es related cultures)." ];
        fhir:ElementDefinition.alias [
@@ -865,19 +661,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -897,9 +680,8 @@
        fhir:index 17;
        fhir:Element.id [ fhir:value "Patient.name.given" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.name.given" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient given name(s)" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient given name(s)" ];
-       fhir:ElementDefinition.definition [ fhir:value "One or more given names of the patient" ];
+       fhir:ElementDefinition.short [ fhir:value "Given names (not always 'first'). Includes middle names" ];
+       fhir:ElementDefinition.definition [ fhir:value "Given name." ];
        fhir:ElementDefinition.comment [ fhir:value "If only initials are recorded, they may be used in place of the full name parts. Initials may be separated into multiple given names but often aren't due to paractical limitations.  This element is not called \"first name\" since given names do not always come first." ];
        fhir:ElementDefinition.alias [
          fhir:value "first name";
@@ -907,12 +689,9 @@
        ], [
          fhir:value "middle name";
          fhir:index 1
-       ], [
-         fhir:value "first name, middle name";
-         fhir:index 2
        ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "*" ];
+       fhir:ElementDefinition.max [ fhir:value "2" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "HumanName.given" ];
          fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
@@ -923,19 +702,6 @@
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.orderMeaning [ fhir:value "Given Names appear in the correct order for presenting the name" ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -969,18 +735,6 @@
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.orderMeaning [ fhir:value "Prefixes appear in the correct order for presenting the name" ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1014,18 +768,6 @@
          fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.orderMeaning [ fhir:value "Suffixes appear in the correct order for presenting the name" ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1054,18 +796,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Period" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -1101,18 +831,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "ContactPoint" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1132,9 +850,8 @@
        fhir:index 22;
        fhir:Element.id [ fhir:value "Patient.gender" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.gender" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient gender" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient gender" ];
-       fhir:ElementDefinition.definition [ fhir:value "The patient's administrative gender (male, female, other, unknown)" ];
+       fhir:ElementDefinition.short [ fhir:value "male | female | other | unknown" ];
+       fhir:ElementDefinition.definition [ fhir:value "Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes." ];
        fhir:ElementDefinition.comment [ fhir:value "The gender might not match the biological sex as determined by genetics or the individual's preferred identification. Note that for both humans and particularly animals, there are other legitimate possibilities than male and female, though the vast majority of systems and contexts only support male and female.  Systems providing decision support or enforcing business rules should ideally do this on the basis of Observations dealing with the specific sex or gender aspect of interest (anatomical, chromosomal, social, etc.)  However, because these observations are infrequently recorded, defaulting to the administrative gender is common practice.  Where such defaulting occurs, rule enforcement should allow for the variation between administrative and biological, chromosomal and other gender aspects.  For example, an alert about a hysterectomy on a male should be handled as a warning or overridable error, not a \"hard\" error.  See the Patient Gender and Sex section for additional information about communicating patient gender and sex." ];
        fhir:ElementDefinition.requirements [ fhir:value "Needed for identification of the individual, in combination with (at least) name and birth date." ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
@@ -1148,24 +865,24 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
+         fhir:Element.extension [
+           fhir:index 0;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
+           fhir:Extension.valueString [ fhir:value "AdministrativeGender" ]
+         ], [
+           fhir:index 1;
+           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding" ];
+           fhir:Extension.valueBoolean [ fhir:value "true"^^xsd:boolean ]
+         ];
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Administrative gender" ]
+         fhir:ElementDefinition.binding.description [ fhir:value "The gender of a person used for administrative purposes." ];
+         fhir:ElementDefinition.binding.valueSet [
+           fhir:value "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.0";
+           fhir:link <http://hl7.org/fhir/ValueSet/administrative-gender|4.0.0>
+         ]
        ];
        fhir:ElementDefinition.mapping [
          fhir:index 0;
@@ -1184,8 +901,7 @@
        fhir:index 23;
        fhir:Element.id [ fhir:value "Patient.birthDate" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.birthDate" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient birth date" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient birth date" ];
+       fhir:ElementDefinition.short [ fhir:value "The date of birth for the individual" ];
        fhir:ElementDefinition.definition [ fhir:value "The date of birth for the individual." ];
        fhir:ElementDefinition.comment [ fhir:value "At least an estimated year should be provided as a guess if the real DOB is unknown  There is a standard extension \"patient-birthTime\" available that should be used where Time is required (such as in maternity/infant care systems)." ];
        fhir:ElementDefinition.requirements [ fhir:value "Age of the individual drives many clinical processes." ];
@@ -1200,19 +916,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "date" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1254,18 +957,6 @@
          fhir:index 1;
          fhir:ElementDefinition.type.code [ fhir:value "dateTime" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different." ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -1286,13 +977,12 @@
        fhir:index 25;
        fhir:Element.id [ fhir:value "Patient.address" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.address" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient address" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient address" ];
-       fhir:ElementDefinition.definition [ fhir:value "The patient's home address" ];
-       fhir:ElementDefinition.comment [ fhir:value "Address may be used by the payer to identify the patient's insurance records" ];
+       fhir:ElementDefinition.short [ fhir:value "An address for the individual" ];
+       fhir:ElementDefinition.definition [ fhir:value "An address for the individual." ];
+       fhir:ElementDefinition.comment [ fhir:value "Include patient address? NCPDP provider RTPBC doesn't include it." ];
        fhir:ElementDefinition.requirements [ fhir:value "May need to keep track of patient addresses for contacting, billing or reporting requirements and also to help with identification." ];
        fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
+       fhir:ElementDefinition.max [ fhir:value "*" ];
        fhir:ElementDefinition.base [
          fhir:ElementDefinition.base.path [ fhir:value "Patient.address" ];
          fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
@@ -1302,19 +992,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Address" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -1332,670 +1009,6 @@
        ]
      ], [
        fhir:index 26;
-       fhir:Element.id [ fhir:value "Patient.address.id" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.id" ];
-       fhir:ElementDefinition.representation [
-         fhir:value "xmlAttr";
-         fhir:index 0
-       ];
-       fhir:ElementDefinition.short [ fhir:value "Unique id for inter-element referencing" ];
-       fhir:ElementDefinition.definition [ fhir:value "Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Element.id" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type" ];
-           fhir:Extension.valueUrl [ fhir:value "string" ]
-         ];
-         fhir:ElementDefinition.type.code [ fhir:value "http://hl7.org/fhirpath/System.String" ]
-       ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
-       ]
-     ], [
-       fhir:index 27;
-       fhir:Element.id [ fhir:value "Patient.address.extension" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.extension" ];
-       fhir:ElementDefinition.slicing [
-         fhir:ElementDefinition.slicing.discriminator [
-           fhir:index 0;
-           fhir:ElementDefinition.slicing.discriminator.type [ fhir:value "value" ];
-           fhir:ElementDefinition.slicing.discriminator.path [ fhir:value "url" ]
-         ];
-         fhir:ElementDefinition.slicing.description [ fhir:value "Extensions are always sliced by (at least) url" ];
-         fhir:ElementDefinition.slicing.rules [ fhir:value "open" ]
-       ];
-       fhir:ElementDefinition.short [ fhir:value "Additional content defined by implementations" ];
-       fhir:ElementDefinition.definition [ fhir:value "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." ];
-       fhir:ElementDefinition.comment [ fhir:value "There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "extensions";
-         fhir:index 0
-       ], [
-         fhir:value "user content";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "*" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Element.extension" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "*" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
-       ]
-     ], [
-       fhir:index 28;
-       fhir:Element.id [ fhir:value "Patient.address.use" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.use" ];
-       fhir:ElementDefinition.short [ fhir:value "home | work | temp | old | billing - purpose of this address" ];
-       fhir:ElementDefinition.definition [ fhir:value "The purpose of this address." ];
-       fhir:ElementDefinition.comment [ fhir:value "Applications can assume that an address is current unless it explicitly says that it is temporary or old." ];
-       fhir:ElementDefinition.requirements [ fhir:value "Allows an appropriate address to be chosen from a list of many." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.use" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "code" ]
-       ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valueCode [ fhir:value "home" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifierReason [ fhir:value "This is labeled as \"Is Modifier\" because applications should not mistake a temporary or old address etc.for a current/permanent one" ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.binding [
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
-           fhir:Extension.valueString [ fhir:value "AddressUse" ]
-         ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "The use of an address." ];
-         fhir:ElementDefinition.binding.valueSet [
-           fhir:value "http://hl7.org/fhir/ValueSet/address-use|4.0.1";
-           fhir:link <http://hl7.org/fhir/ValueSet/address-use|4.0.1>
-         ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.7" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "unique(./use)" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "servd" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./AddressPurpose" ]
-       ]
-     ], [
-       fhir:index 29;
-       fhir:Element.id [ fhir:value "Patient.address.type" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.type" ];
-       fhir:ElementDefinition.short [ fhir:value "postal | physical | both" ];
-       fhir:ElementDefinition.definition [ fhir:value "Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both." ];
-       fhir:ElementDefinition.comment [ fhir:value "The definition of Address states that \"address is intended to describe postal addresses, not physical locations\". However, many applications track whether an address has a dual purpose of being a location that can be visited as well as being a valid delivery destination, and Postal addresses are often used as proxies for physical locations (also see the [Location](http://hl7.org/fhir/R4/location.html#) resource)." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.type" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "code" ]
-       ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valueCode [ fhir:value "both" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.binding [
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" ];
-           fhir:Extension.valueString [ fhir:value "AddressType" ]
-         ];
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "The type of an address (physical / postal)." ];
-         fhir:ElementDefinition.binding.valueSet [
-           fhir:value "http://hl7.org/fhir/ValueSet/address-type|4.0.1";
-           fhir:link <http://hl7.org/fhir/ValueSet/address-type|4.0.1>
-         ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.18" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "unique(./use)" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "vcard" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "address type parameter" ]
-       ]
-     ], [
-       fhir:index 30;
-       fhir:Element.id [ fhir:value "Patient.address.text" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.text" ];
-       fhir:ElementDefinition.short [ fhir:value "Text representation of the address" ];
-       fhir:ElementDefinition.definition [ fhir:value "Specifies the entire address as it should be displayed e.g. on a postal label. This may be provided instead of or as well as the specific parts." ];
-       fhir:ElementDefinition.comment [ fhir:value "Can provide both a text representation and parts. Applications updating an address SHALL ensure that  when both text and parts are present,  no content is included in the text that isn't found in a part." ];
-       fhir:ElementDefinition.requirements [ fhir:value "A renderable, unencoded form." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.text" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
-       ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valueString [ fhir:value "137 Nowhere Street, Erewhon 9132" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.1 + XAD.2 + XAD.3 + XAD.4 + XAD.5 + XAD.6" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./formatted" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "vcard" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "address label parameter" ]
-       ]
-     ], [
-       fhir:index 31;
-       fhir:Element.id [ fhir:value "Patient.address.line" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.line" ];
-       fhir:ElementDefinition.short [ fhir:value "Street name, number, direction & P.O. Box etc." ];
-       fhir:ElementDefinition.definition [ fhir:value "This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information." ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "*" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.line" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "*" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
-       ];
-       fhir:ElementDefinition.orderMeaning [ fhir:value "The order in which lines should appear in an address label" ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valueString [ fhir:value "137 Nowhere Street" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.1 + XAD.2 (note: XAD.1 and XAD.2 have different meanings for a company address than for a person address)" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "AD.part[parttype = AL]" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "vcard" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "street" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "servd" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./StreetAddress (newline delimitted)" ]
-       ]
-     ], [
-       fhir:index 32;
-       fhir:Element.id [ fhir:value "Patient.address.city" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.city" ];
-       fhir:ElementDefinition.short [ fhir:value "Name of city, town etc." ];
-       fhir:ElementDefinition.definition [ fhir:value "The name of the city, town, suburb, village or other community or delivery center." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "Municpality";
-         fhir:index 0
-       ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.city" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
-       ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valueString [ fhir:value "Erewhon" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.3" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "AD.part[parttype = CTY]" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "vcard" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "locality" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "servd" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./Jurisdiction" ]
-       ]
-     ], [
-       fhir:index 33;
-       fhir:Element.id [ fhir:value "Patient.address.district" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.district" ];
-       fhir:ElementDefinition.short [ fhir:value "District name (aka county)" ];
-       fhir:ElementDefinition.definition [ fhir:value "The name of the administrative area (county)." ];
-       fhir:ElementDefinition.comment [ fhir:value "District is sometimes known as county, but in some regions 'county' is used in place of city (municipality), so county name should be conveyed in city instead." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "County";
-         fhir:index 0
-       ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.district" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
-       ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valueString [ fhir:value "Madison" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.9" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "AD.part[parttype = CNT | CPA]" ]
-       ]
-     ], [
-       fhir:index 34;
-       fhir:Element.id [ fhir:value "Patient.address.state" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.state" ];
-       fhir:ElementDefinition.short [ fhir:value "Sub-unit of country (abbreviations ok)" ];
-       fhir:ElementDefinition.definition [ fhir:value "Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (e.g. US 2 letter state codes)." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "Province";
-         fhir:index 0
-       ], [
-         fhir:value "Territory";
-         fhir:index 1
-       ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.state" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Two Letter USPS alphabetic codes" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.4" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "AD.part[parttype = STA]" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "vcard" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "region" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "servd" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./Region" ]
-       ]
-     ], [
-       fhir:index 35;
-       fhir:Element.id [ fhir:value "Patient.address.postalCode" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.postalCode" ];
-       fhir:ElementDefinition.short [ fhir:value "Postal code for area" ];
-       fhir:ElementDefinition.definition [ fhir:value "A postal code designating a region defined by the postal service." ];
-       fhir:ElementDefinition.alias [
-         fhir:value "Zip";
-         fhir:index 0
-       ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.postalCode" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
-       ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valueString [ fhir:value "9132" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.5" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "AD.part[parttype = ZIP]" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "vcard" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "code" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "servd" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./PostalIdentificationCode" ]
-       ]
-     ], [
-       fhir:index 36;
-       fhir:Element.id [ fhir:value "Patient.address.country" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.country" ];
-       fhir:ElementDefinition.short [ fhir:value "Country (e.g. can be ISO 3166 2 or 3 letter code)" ];
-       fhir:ElementDefinition.definition [ fhir:value "Country - a nation as commonly understood or generally accepted." ];
-       fhir:ElementDefinition.comment [ fhir:value "Populate when not a US address" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.country" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "string" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "ISO 3166 2-character country codes" ]
-       ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.6" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "AD.part[parttype = CNT]" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "vcard" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "country" ]
-       ], [
-         fhir:index 3;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "servd" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./Country" ]
-       ]
-     ], [
-       fhir:index 37;
-       fhir:Element.id [ fhir:value "Patient.address.period" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.period" ];
-       fhir:ElementDefinition.short [ fhir:value "Time period when address was/is in use" ];
-       fhir:ElementDefinition.definition [ fhir:value "Time period when address was/is in use." ];
-       fhir:ElementDefinition.requirements [ fhir:value "Allows addresses to be placed in historical context." ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.base [
-         fhir:ElementDefinition.base.path [ fhir:value "Address.period" ];
-         fhir:ElementDefinition.base.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-         fhir:ElementDefinition.base.max [ fhir:value "1" ]
-       ];
-       fhir:ElementDefinition.type [
-         fhir:index 0;
-         fhir:ElementDefinition.type.code [ fhir:value "Period" ]
-       ];
-       fhir:ElementDefinition.example [
-         fhir:index 0;
-         fhir:ElementDefinition.example.label [ fhir:value "General" ];
-         fhir:ElementDefinition.example.valuePeriod [
-           fhir:Period.start [ fhir:value "2010-03-23T00:00:00-05:00"^^xsd:dateTime ];
-           fhir:Period.end [ fhir:value "2010-07-01T00:00:00-05:00"^^xsd:dateTime ]
-         ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
-       fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
-       fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.mapping [
-         fhir:index 0;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "v2" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "XAD.12 / XAD.13 + XAD.14" ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "rim" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./usablePeriod[type=\"IVL<TS>\"]" ]
-       ], [
-         fhir:index 2;
-         fhir:ElementDefinition.mapping.identity [ fhir:value "servd" ];
-         fhir:ElementDefinition.mapping.map [ fhir:value "./StartDate and ./EndDate" ]
-       ]
-     ], [
-       fhir:index 38;
        fhir:Element.id [ fhir:value "Patient.maritalStatus" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.maritalStatus" ];
        fhir:ElementDefinition.short [ fhir:value "Marital (civil) status of a patient" ];
@@ -2011,18 +1024,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2057,7 +1058,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".patient.maritalStatusCode" ]
        ]
      ], [
-       fhir:index 39;
+       fhir:index 27;
        fhir:Element.id [ fhir:value "Patient.multipleBirth[x]" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.multipleBirth[x]" ];
        fhir:ElementDefinition.short [ fhir:value "Whether patient is part of a multiple birth" ];
@@ -2078,18 +1079,6 @@
          fhir:index 1;
          fhir:ElementDefinition.type.code [ fhir:value "integer" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2106,7 +1095,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 40;
+       fhir:index 28;
        fhir:Element.id [ fhir:value "Patient.photo" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.photo" ];
        fhir:ElementDefinition.short [ fhir:value "Image of the patient" ];
@@ -2124,18 +1113,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Attachment" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2152,7 +1129,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 41;
+       fhir:index 29;
        fhir:Element.id [ fhir:value "Patient.contact" ];
        fhir:Element.extension [
          fhir:index 0;
@@ -2182,10 +1159,7 @@
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ], [
          fhir:index 1;
          fhir:ElementDefinition.constraint.key [ fhir:value "pat-1" ];
@@ -2206,7 +1180,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 42;
+       fhir:index 30;
        fhir:Element.id [ fhir:value "Patient.contact.id" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.id" ];
        fhir:ElementDefinition.representation [
@@ -2224,12 +1198,7 @@
        ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type" ];
-           fhir:Extension.valueUrl [ fhir:value "string" ]
-         ];
-         fhir:ElementDefinition.type.code [ fhir:value "http://hl7.org/fhirpath/System.String" ]
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2239,7 +1208,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 43;
+       fhir:index 31;
        fhir:Element.id [ fhir:value "Patient.contact.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional content defined by implementations" ];
@@ -2263,29 +1232,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2294,7 +1240,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 44;
+       fhir:index 32;
        fhir:Element.id [ fhir:value "Patient.contact.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored even if unrecognized" ];
@@ -2322,29 +1268,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -2354,7 +1277,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 45;
+       fhir:index 33;
        fhir:Element.id [ fhir:value "Patient.contact.relationship" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.relationship" ];
        fhir:ElementDefinition.short [ fhir:value "The kind of relationship" ];
@@ -2370,18 +1293,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2412,7 +1323,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 46;
+       fhir:index 34;
        fhir:Element.id [ fhir:value "Patient.contact.name" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.name" ];
        fhir:ElementDefinition.short [ fhir:value "A name associated with the contact person" ];
@@ -2428,18 +1339,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "HumanName" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2457,7 +1356,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 47;
+       fhir:index 35;
        fhir:Element.id [ fhir:value "Patient.contact.telecom" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.telecom" ];
        fhir:ElementDefinition.short [ fhir:value "A contact detail for the person" ];
@@ -2475,18 +1374,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "ContactPoint" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2503,7 +1390,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 48;
+       fhir:index 36;
        fhir:Element.id [ fhir:value "Patient.contact.address" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.address" ];
        fhir:ElementDefinition.short [ fhir:value "Address for the contact person" ];
@@ -2519,18 +1406,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Address" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2548,7 +1423,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 49;
+       fhir:index 37;
        fhir:Element.id [ fhir:value "Patient.contact.gender" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.gender" ];
        fhir:ElementDefinition.short [ fhir:value "male | female | other | unknown" ];
@@ -2565,18 +1440,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
@@ -2592,8 +1455,8 @@
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The gender of a person used for administrative purposes." ];
          fhir:ElementDefinition.binding.valueSet [
-           fhir:value "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1";
-           fhir:link <http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1>
+           fhir:value "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.0";
+           fhir:link <http://hl7.org/fhir/ValueSet/administrative-gender|4.0.0>
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -2610,7 +1473,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 50;
+       fhir:index 38;
        fhir:Element.id [ fhir:value "Patient.contact.organization" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.organization" ];
        fhir:ElementDefinition.short [ fhir:value "Organization that is associated with the contact" ];
@@ -2636,18 +1499,6 @@
          fhir:value "pat-1";
          fhir:index 0
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2664,7 +1515,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 51;
+       fhir:index 39;
        fhir:Element.id [ fhir:value "Patient.contact.period" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.contact.period" ];
        fhir:ElementDefinition.short [ fhir:value "The period during which this contact person or organization is valid to be contacted relating to this patient" ];
@@ -2680,18 +1531,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Period" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2704,7 +1543,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 52;
+       fhir:index 40;
        fhir:Element.id [ fhir:value "Patient.communication" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.communication" ];
        fhir:ElementDefinition.short [ fhir:value "A language which may be used to communicate with the patient about his or her health" ];
@@ -2729,10 +1568,7 @@
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2746,7 +1582,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "patient.languageCommunication" ]
        ]
      ], [
-       fhir:index 53;
+       fhir:index 41;
        fhir:Element.id [ fhir:value "Patient.communication.id" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.communication.id" ];
        fhir:ElementDefinition.representation [
@@ -2764,12 +1600,7 @@
        ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type" ];
-           fhir:Extension.valueUrl [ fhir:value "string" ]
-         ];
-         fhir:ElementDefinition.type.code [ fhir:value "http://hl7.org/fhirpath/System.String" ]
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2779,7 +1610,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 54;
+       fhir:index 42;
        fhir:Element.id [ fhir:value "Patient.communication.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.communication.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional content defined by implementations" ];
@@ -2803,29 +1634,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -2834,7 +1642,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 55;
+       fhir:index 43;
        fhir:Element.id [ fhir:value "Patient.communication.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.communication.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored even if unrecognized" ];
@@ -2862,29 +1670,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -2894,7 +1679,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 56;
+       fhir:index 44;
        fhir:Element.id [ fhir:value "Patient.communication.language" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.communication.language" ];
        fhir:ElementDefinition.short [ fhir:value "The language which can be used to communicate with the patient about his or her health" ];
@@ -2911,18 +1696,6 @@
        fhir:ElementDefinition.type [
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "CodeableConcept" ]
-       ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -2964,7 +1737,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".languageCode" ]
        ]
      ], [
-       fhir:index 57;
+       fhir:index 45;
        fhir:Element.id [ fhir:value "Patient.communication.preferred" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.communication.preferred" ];
        fhir:ElementDefinition.short [ fhir:value "Language preference indicator" ];
@@ -2982,18 +1755,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "boolean" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -3010,7 +1771,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".preferenceInd" ]
        ]
      ], [
-       fhir:index 58;
+       fhir:index 46;
        fhir:Element.id [ fhir:value "Patient.generalPractitioner" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.generalPractitioner" ];
        fhir:ElementDefinition.short [ fhir:value "Patient's nominated primary care provider" ];
@@ -3044,18 +1805,6 @@
            fhir:link <http://hl7.org/fhir/StructureDefinition/PractitionerRole>
          ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -3072,7 +1821,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 59;
+       fhir:index 47;
        fhir:Element.id [ fhir:value "Patient.managingOrganization" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.managingOrganization" ];
        fhir:ElementDefinition.short [ fhir:value "Organization that is the custodian of the patient record" ];
@@ -3095,18 +1844,6 @@
            fhir:link <http://hl7.org/fhir/StructureDefinition/Organization>
          ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -3119,7 +1856,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value ".providerOrganization" ]
        ]
      ], [
-       fhir:index 60;
+       fhir:index 48;
        fhir:Element.id [ fhir:value "Patient.link" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.link" ];
        fhir:ElementDefinition.short [ fhir:value "Link to another patient resource that concerns the same actual person" ];
@@ -3144,10 +1881,7 @@
          fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
          fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
          fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
+         fhir:ElementDefinition.constraint.source [ fhir:value "Element" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "This element is labeled as a modifier because it might not be the main Patient resource, and the referenced patient should be used instead of this Patient record. This is when the link.type value is 'replaced-by'" ];
@@ -3162,7 +1896,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 61;
+       fhir:index 49;
        fhir:Element.id [ fhir:value "Patient.link.id" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.link.id" ];
        fhir:ElementDefinition.representation [
@@ -3180,12 +1914,7 @@
        ];
        fhir:ElementDefinition.type [
          fhir:index 0;
-         fhir:Element.extension [
-           fhir:index 0;
-           fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type" ];
-           fhir:Extension.valueUrl [ fhir:value "string" ]
-         ];
-         fhir:ElementDefinition.type.code [ fhir:value "http://hl7.org/fhirpath/System.String" ]
+         fhir:ElementDefinition.type.code [ fhir:value "string" ]
        ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
@@ -3195,7 +1924,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 62;
+       fhir:index 50;
        fhir:Element.id [ fhir:value "Patient.link.extension" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.link.extension" ];
        fhir:ElementDefinition.short [ fhir:value "Additional content defined by implementations" ];
@@ -3219,29 +1948,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -3250,7 +1956,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 63;
+       fhir:index 51;
        fhir:Element.id [ fhir:value "Patient.link.modifierExtension" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.link.modifierExtension" ];
        fhir:ElementDefinition.short [ fhir:value "Extensions that cannot be ignored even if unrecognized" ];
@@ -3278,29 +1984,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "Extension" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ], [
-         fhir:index 1;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ext-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "Must have either extensions or value[x], not both" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "extension.exists() != value.exists()" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "exists(f:extension)!=exists(f:*[starts-with(local-name(.), \"value\")])" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Extension";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Extension>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.isModifierReason [ fhir:value "Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
@@ -3310,7 +1993,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "N/A" ]
        ]
      ], [
-       fhir:index 64;
+       fhir:index 52;
        fhir:Element.id [ fhir:value "Patient.link.other" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.link.other" ];
        fhir:ElementDefinition.short [ fhir:value "The other patient or related person resource that the link refers to" ];
@@ -3341,18 +2024,6 @@
            fhir:link <http://hl7.org/fhir/StructureDefinition/RelatedPerson>
          ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.mapping [
@@ -3369,7 +2040,7 @@
          fhir:ElementDefinition.mapping.map [ fhir:value "n/a" ]
        ]
      ], [
-       fhir:index 65;
+       fhir:index 53;
        fhir:Element.id [ fhir:value "Patient.link.type" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.link.type" ];
        fhir:ElementDefinition.short [ fhir:value "replaced-by | replaces | refer | seealso" ];
@@ -3385,18 +2056,6 @@
          fhir:index 0;
          fhir:ElementDefinition.type.code [ fhir:value "code" ]
        ];
-       fhir:ElementDefinition.constraint [
-         fhir:index 0;
-         fhir:ElementDefinition.constraint.key [ fhir:value "ele-1" ];
-         fhir:ElementDefinition.constraint.severity [ fhir:value "error" ];
-         fhir:ElementDefinition.constraint.human [ fhir:value "All FHIR elements must have a @value or children" ];
-         fhir:ElementDefinition.constraint.expression [ fhir:value "hasValue() or (children().count() > id.count())" ];
-         fhir:ElementDefinition.constraint.xpath [ fhir:value "@value|f:*|h:div" ];
-         fhir:ElementDefinition.constraint.source [
-           fhir:value "http://hl7.org/fhir/StructureDefinition/Element";
-           fhir:link <http://hl7.org/fhir/StructureDefinition/Element>
-         ]
-       ];
        fhir:ElementDefinition.isModifier [ fhir:value "false"^^xsd:boolean ];
        fhir:ElementDefinition.isSummary [ fhir:value "true"^^xsd:boolean ];
        fhir:ElementDefinition.binding [
@@ -3408,8 +2067,8 @@
          fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
          fhir:ElementDefinition.binding.description [ fhir:value "The type of link between this patient resource and another patient resource." ];
          fhir:ElementDefinition.binding.valueSet [
-           fhir:value "http://hl7.org/fhir/ValueSet/link-type|4.0.1";
-           fhir:link <http://hl7.org/fhir/ValueSet/link-type|4.0.1>
+           fhir:value "http://hl7.org/fhir/ValueSet/link-type|4.0.0";
+           fhir:link <http://hl7.org/fhir/ValueSet/link-type|4.0.0>
          ]
        ];
        fhir:ElementDefinition.mapping [
@@ -3433,105 +2092,35 @@
        fhir:Element.id [ fhir:value "Patient.name" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.name" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
+       fhir:ElementDefinition.max [ fhir:value "1" ]
      ], [
        fhir:index 2;
        fhir:Element.id [ fhir:value "Patient.name.family" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.name.family" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient family name" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient family name" ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
+       fhir:ElementDefinition.max [ fhir:value "1" ]
      ], [
        fhir:index 3;
        fhir:Element.id [ fhir:value "Patient.name.given" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.name.given" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient given name(s)" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient given name(s)" ];
-       fhir:ElementDefinition.definition [ fhir:value "One or more given names of the patient" ];
-       fhir:ElementDefinition.alias [
-         fhir:value "first name, middle name";
-         fhir:index 0
-       ];
        fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
+       fhir:ElementDefinition.max [ fhir:value "2" ]
      ], [
        fhir:index 4;
        fhir:Element.id [ fhir:value "Patient.gender" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.gender" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient gender" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient gender" ];
-       fhir:ElementDefinition.definition [ fhir:value "The patient's administrative gender (male, female, other, unknown)" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Administrative gender" ]
-       ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ], [
        fhir:index 5;
        fhir:Element.id [ fhir:value "Patient.birthDate" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.birthDate" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient birth date" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient birth date" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
+       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ]
      ], [
        fhir:index 6;
        fhir:Element.id [ fhir:value "Patient.address" ];
        fhir:ElementDefinition.path [ fhir:value "Patient.address" ];
-       fhir:ElementDefinition.label [ fhir:value "Patient address" ];
-       fhir:ElementDefinition.short [ fhir:value "Patient address" ];
-       fhir:ElementDefinition.definition [ fhir:value "The patient's home address" ];
-       fhir:ElementDefinition.comment [ fhir:value "Address may be used by the payer to identify the patient's insurance records" ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
-     ], [
-       fhir:index 7;
-       fhir:Element.id [ fhir:value "Patient.address.line" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.line" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "*" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
-     ], [
-       fhir:index 8;
-       fhir:Element.id [ fhir:value "Patient.address.city" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.city" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
-     ], [
-       fhir:index 9;
-       fhir:Element.id [ fhir:value "Patient.address.state" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.state" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "extensible" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "Two Letter USPS alphabetic codes" ]
-       ]
-     ], [
-       fhir:index 10;
-       fhir:Element.id [ fhir:value "Patient.address.postalCode" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.postalCode" ];
-       fhir:ElementDefinition.min [ fhir:value "1"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.max [ fhir:value "1" ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ]
-     ], [
-       fhir:index 11;
-       fhir:Element.id [ fhir:value "Patient.address.country" ];
-       fhir:ElementDefinition.path [ fhir:value "Patient.address.country" ];
-       fhir:ElementDefinition.comment [ fhir:value "Populate when not a US address" ];
-       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ];
-       fhir:ElementDefinition.mustSupport [ fhir:value "true"^^xsd:boolean ];
-       fhir:ElementDefinition.binding [
-         fhir:ElementDefinition.binding.strength [ fhir:value "required" ];
-         fhir:ElementDefinition.binding.description [ fhir:value "ISO 3166 2-character country codes" ]
-       ]
+       fhir:ElementDefinition.comment [ fhir:value "Include patient address? NCPDP provider RTPBC doesn't include it." ];
+       fhir:ElementDefinition.min [ fhir:value "0"^^xsd:nonNegativeInteger ]
      ]
   ] .
 
