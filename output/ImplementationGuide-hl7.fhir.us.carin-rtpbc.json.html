@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="CARIN Consumer Realtime Pharmacy Benefit Check Implemenation Guide" />
-  <meta name="author" content="CARIN Alliance"/>
+  <meta name="author" content="HL7 International - Pharmacy"/>
   <link href="fhir.css" rel="stylesheet"/>
 
 
@@ -280,47 +280,39 @@ can only resize using html  or css ;-(
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide">resourceType</a>" : "ImplementationGuide",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.id">id</a>" : "hl7.fhir.us.carin-rtpbc",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.meta">meta</a>" : {
-    "<a href="http://hl7.org/fhir/R4/datatypes.html#Meta#Meta.versionId">versionId</a>" : "129",
-    "<a href="http://hl7.org/fhir/R4/datatypes.html#Meta#Meta.lastUpdated">lastUpdated</a>" : "2019-10-25T13:53:39.000-05:00"
+    "<a href="http://hl7.org/fhir/R4/datatypes.html#Meta#Meta.versionId">versionId</a>" : "151",
+    "<a href="http://hl7.org/fhir/R4/datatypes.html#Meta#Meta.lastUpdated">lastUpdated</a>" : "2019-11-01T08:23:36.000-05:00"
   },
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.text">text</a>" : {
     "<a href="http://hl7.org/fhir/R4/datatypes.html#Narrative#Narrative.status">status</a>" : "additional",
-    "<a href="http://hl7.org/fhir/R4/datatypes.html#Narrative#Narrative.div">div</a>" : "&lt;div xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;This is a guide for implementing consumer-focused real-time pharmacy benefit checking (consumer RTPBC) using FHIR R4. With consumer RTPBC, a patient can learn how their medications will be covered at the pharmacy, including out of pocket costs, prior authorization requirements and any limits that might apply.\n        &lt;/div&gt;"<a name="end-xhtml"></a>
+    "<a href="http://hl7.org/fhir/R4/datatypes.html#Narrative#Narrative.div">div</a>" : "&lt;div xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;This is a guide for implementing the consumer-focused real-time pharmacy benefit check (consumer RTPBC) using FHIR R4. Using RTPBC, a patient can learn how their medications will be covered at the pharmacy, including out of pocket costs and any coverage restrictions or requirements that might apply.\n        \n        \n        &lt;/div&gt;"<a name="end-xhtml"></a>
   },
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.url">url</a>" : "http://hl7.org/fhir/us/carin-bb/ImplementationGuide/hl7.fhir.us.carin-rtpbc",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.version">version</a>" : "0.1.00-DRAFT",
-  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.name">name</a>" : "CARINRTPBC",
+  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.name">name</a>" : "CarinRtpbc",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.title">title</a>" : "CARIN Consumer Realtime Pharmacy Benefit Check",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.status">status</a>" : "draft",
-  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.date">date</a>" : "2019-10-28T11:31:35-05:00",
-  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.publisher">publisher</a>" : "CARIN Alliance",
-  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.description">description</a>" : "*(To the [narrative table of contents...](../CARIN-RTPBC/toc.html))*\n\n&lt;br&gt;\n\nThis is a guide for implementing the **consumer-focused real-time pharmacy benefit check** (consumer RTPBC) using FHIR R4.\nWith consumer RTPBC, a patient can learn how their medications will be covered at the pharmacy, including out of pocket costs, prior authorization requirements and any limits that might apply.\n\n&lt;br&gt;\n\nThe process looks like this...\n  \n&lt;div&gt;&lt;img src=\&quot;https://www.frankmckinney.com/carin-rtpbc/basic-info-flow.png\&quot; alt=\&quot;basic information flow\&quot;&gt;&lt;/div&gt;&lt;br&gt;\n\n***The stakeholders...***\n* the **patient,** who wishes to understand how their medication is covered by their insurance: their out of pocket cost, restrictions, and pharmacy options\n* the **consumer app** that submits the RTPBC request to the payer, and interprets the response for the patient\n* the patient's **insurer or agent** that processes the RTPBC request and returns a response containing pricing, coverage restrictions, pharmacy options for the requested drug and alternative medications (typically the pharmacy benefit manager that handles the patient's prescription benefit) \n* *(optionally, the patient app may retrieve related information such as cash or discount pricing from other entities. Those parties and exchanges are out of scope of this guide)*\n\n***In the request...***\n*     the patient's app gathers information about the prescription... entered by the patient or imported from another source\n*     the patient provides coverage information from their insurance card, or the app retrieves it using an eligibility service (outside the scope of this guide)\n*     the app packages up the patient, coverage, prescription and preferred pharmacy information in FHIR resources and submits them to the patient's insurer\n\n***The response and its use...***\n*     the insurer determines the patient cost and coverage details for the requested pharmacy and potentially for other pharmacy options--such as a mail service pharmacy\n*     the insurer also checks for preferred alternative medications with better coverage under the patient's plan, and returns cost, coverage and pharmacy options for those as well\n*     the patient's app interprets and presents the information in an understandable way, possibly alongside cash or discount pricing gathered from other sources (outside this guide's scope)\n*     ***with the information from the insurer's response,*** the patient can learn whether the drug is covered, compare insurance out of pocket costs between pharmacies--and can also compare to cash prices and discount options gathered by their app.\n\n&lt;br&gt;\n\n### Scope of this guide\nConsumer RTPBC is intended to be used...\n* in the United States (as it reflects unique US pharmacy insurance roles and conventions)\n* for medications that are covered under the *pharmacy benefit* portion of the patient's health insurance, which typically excludes medications administered during hospital care or as part of medical procedures\n* for commercially available medication products that are not compounded at the pharmacy. *(Support for compounds could potentially be added later)*\n\n&lt;br&gt;\n\nThis initial release of the consumer RTPBC profile seeks to include the coverage and cost information that's the most useful and meaningful to patients. As a result, certain details that are part of the *provider-focused RTPBC standard* are not included here. Additional content could potentially be added in a later effort.\n\n&lt;br&gt;\n\n*Related information flows outside of consumer RTPBC*\nThe patient's app might gather related information before or after submitting the consumer RTPBC request. *These exchanges are outside the scope of this guide.*\n\n&lt;br&gt;\n\n### Author\nThis implementation guide is the result of work sponsored by the CARIN Alliance, whose goal is to advance the ability for consumers and their authorized caregivers to easily get, use, and share their digital health information when, where, and how they want to achieve their goals.\n\n&lt;br&gt; \n\nThe guide is currently in development and incomplete. \n\n&lt;br&gt;\n\nComments and suggestions are welcome...\n\n* on our Zulip stream...\nhttps://chat.fhir.org/#narrow/stream/208660-CARIN-Benefit.20Check.20IG\n\n* or send a note to fm@frankmckinney.com\n\n\n&lt;br&gt;",
+  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.date">date</a>" : "2019-11-01T08:25:35-05:00",
+  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.publisher">publisher</a>" : "HL7 International - Pharmacy",
+  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.contact">contact</a>" : [
+    {
+      "<a href="http://hl7.org/fhir/R4/metadatatypes.html#ContactDetail#ContactDetail.name">name</a>" : "HL7 Pharmacy Workgroup",
+      "<a href="http://hl7.org/fhir/R4/metadatatypes.html#ContactDetail#ContactDetail.telecom">telecom</a>" : [
+        {
+          "<a href="http://hl7.org/fhir/R4/datatypes.html#ContactPoint#ContactPoint.system">system</a>" : "url",
+          "<a href="http://hl7.org/fhir/R4/datatypes.html#ContactPoint#ContactPoint.value">value</a>" : "https://confluence.hl7.org/display/PHAR/Pharmacy"
+        }
+      ]
+    }
+  ],
+  "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.description">description</a>" : "*(Jump to the table of contents...*  Need to fix... ../CARIN-RTPBC/toc.html)\n\n&lt;br&gt;\n\nThis is a guide for implementing the **consumer-focused real-time pharmacy benefit check** (consumer RTPBC) using FHIR R4.\nUsing RTPBC, a patient can learn how their medications will be covered at the pharmacy, including out of pocket costs and any coverage restrictions or requirements that might apply.\n\n&lt;br&gt;\n\nThe process looks like this...\n \n&lt;div&gt;&lt;img src=\&quot;https://www.frankmckinney.com/carin-rtpbc/basic-info-flow.png\&quot; alt=\&quot;basic information flow\&quot;&gt;&lt;/div&gt;&lt;br&gt;\n\n***The stakeholders...***\n* the **patient,** who wishes to understand how their medication is covered by their insurance: their out of pocket cost, restrictions, and pharmacy options\n* the **consumer app** that submits the RTPBC request to the payer, and interprets the response for the patient\n* the patient's **insurer or agent** that processes the RTPBC request and returns a response containing pricing, coverage restrictions, pharmacy options for the requested drug and alternative medications (typically the pharmacy benefit manager that handles the patient's prescription benefit) \n* *(optionally, the patient app may retrieve related information such as cash or discount pricing from other entities. Those parties and exchanges are out of scope of this guide)*\n\n***In the request...***\n*  the patient's app gathers information about the prescription... entered by the patient or imported from another source\n*  the patient provides coverage information from their insurance card, or the app retrieves it using an eligibility service (outside the scope of this guide)\n*  the app packages up the patient, coverage, prescription and preferred pharmacy information in FHIR resources and submits them to the patient's insurer\n\n***The response and its use...***\n*  the insurer determines the patient cost and coverage details for the requested pharmacy and potentially for other pharmacy options--such as a mail service pharmacy\n*  the insurer also checks for preferred alternative medications with better coverage under the patient's plan, and returns cost, coverage and pharmacy options for those as well\n*  the patient's app interprets and presents the information in an understandable way, possibly alongside cash or discount pricing gathered from other sources (outside this guide's scope)\n*  ***with the information from the insurer's response,*** the patient can learn whether the drug is covered, compare insurance out of pocket costs between pharmacies--and can also compare to cash prices and discount options gathered by their app.\n\n&lt;br&gt;\n\n### Scope of this guide\nConsumer RTPBC is intended to be used...\n* in the United States (as it reflects unique US pharmacy insurance roles and conventions)\n* for medications that are covered under the *pharmacy benefit* portion of the patient's health insurance, which typically excludes medications administered during hospital care or as part of medical procedures\n* for commercially available medication products that are not compounded at the pharmacy. *(Support for compounds could potentially be added later)*\n\n&lt;br&gt;\n\nThis initial release of the consumer RTPBC profile seeks to include the coverage and cost information that's the most useful and meaningful to patients. As a result, certain details that are part of the *provider-focused RTPBC standard* are not included here. Additional content could potentially be added in a later effort.\n\n&lt;br&gt;\n\n*Related information flows outside of consumer RTPBC*\nThe patient's app might gather related information before or after submitting the consumer RTPBC request. *These exchanges are outside the scope of this guide.*\n\n&lt;br&gt;\n\n### Author\nThis implementation guide is the result of work sponsored by the CARIN Alliance, whose goal is to advance the ability for consumers and their authorized caregivers to easily get, use, and share their digital health information when, where, and how they want to achieve their goals.\n\n&lt;br&gt; \n\nThe guide is currently in development and incomplete. \n\n&lt;br&gt;\n\nComments and suggestions are welcome...\n\n* on our Zulip stream...\nhttps://chat.fhir.org/#narrow/stream/208660-CARIN-Benefit.20Check.20IG\n\n* or send a note to fm@frankmckinney.com\n\n\n&lt;br&gt;",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.packageId">packageId</a>" : "hl7.fhir.us.carin-rtpbc",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.license">license</a>" : "CC0-1.0",
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.fhirVersion">fhirVersion</a>" : [
-    "4.0.0"
+    "4.0.1"
   ],
   "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition">definition</a>" : {
     "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource">resource</a>" : [
-      {
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
-          {
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "StructureDefinition:resource"
-          },
-          {
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "StructureDefinition-carin-rtpbc-claim.html"
-          }
-        ],
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-claim",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCClaim"
-        },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCClaim",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC Request using Claim",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
-      },
       {
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
           {
@@ -334,48 +326,9 @@ can only resize using html  or css ;-(
         ],
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
           "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-ClaimResponse",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCClaimResponse"
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcResponse"
         },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCClaimResponse",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC Response using ClaimResponse",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
-      },
-      {
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
-          {
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "StructureDefinition:resource"
-          },
-          {
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "StructureDefinition-carin-rtpbc-MedicationRequest.html"
-          }
-        ],
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-MedicationRequest",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCMedicationRequest"
-        },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCMedicationRequest",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC MedicationRequest",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
-      },
-      {
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
-          {
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "StructureDefinition:resource"
-          },
-          {
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "StructureDefinition-carin-rtpbc-Practitioner.html"
-          }
-        ],
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-Practitioner",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCPractitioner"
-        },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCPractitioner",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC Practitioner",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcResponse",
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
       },
       {
@@ -391,10 +344,27 @@ can only resize using html  or css ;-(
         ],
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
           "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-Patient",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCPatient"
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcRequestPatientInfo"
         },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCPatient",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC Patient",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcRequestPatientInfo",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "StructureDefinition:resource"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "StructureDefinition-carin-rtpbc-Practitioner.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-Practitioner",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcRequestPrescriberInfo"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcRequestPrescriberInfo",
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
       },
       {
@@ -410,10 +380,27 @@ can only resize using html  or css ;-(
         ],
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
           "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-OperationOutcome",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCOperationOutcome"
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcExceptionResponse"
         },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCOperationOutcome",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC OperationOutcome",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcExceptionResponse",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "StructureDefinition:resource"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "StructureDefinition-carin-rtpbc-MedicationRequest.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-MedicationRequest",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcRequestPrescriptionInfo"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcRequestPrescriptionInfo",
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
       },
       {
@@ -429,10 +416,63 @@ can only resize using html  or css ;-(
         ],
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
           "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-Coverage",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCCoverage"
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcRequestCoverageIdentifiers"
         },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCCoverage",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC Coverage",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcRequestCoverageIdentifiers",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "StructureDefinition:resource"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "StructureDefinition-carin-rtpbc-request-Claim.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-request-Claim",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcRequest"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcRequest",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "CodeSystem"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "CodeSystem-carin-rtpbc-billing-unit-code-system.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "CodeSystem/carin-rtpbc-billing-unit-code-system",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcBillingUnitCodeSystem"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcBillingUnitCodeSystem",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "ValueSet"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "ValueSet-carin-rtpbc-billing-unit-value-set.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "ValueSet/carin-rtpbc-billing-unit-value-set",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtbpcBillingUnitValueSet"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtbpcBillingUnitValueSet",
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
       },
       {
@@ -448,35 +488,105 @@ can only resize using html  or css ;-(
         ],
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
           "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-pharmacy-Organization",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCPharmacyOrganization"
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcPharmacy"
         },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCPharmacyOrganization",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC Pharmacy Organization",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcPharmacy",
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
       },
       {
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
           {
             "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "StructureDefinition:resource"
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "ValueSet"
           },
           {
             "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
-            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "StructureDefinition-carin-rtpbc-payer-Organization.html"
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "ValueSet-carin-rtpbc-patient-pay-category-value-set.html"
           }
         ],
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "StructureDefinition/carin-rtpbc-payer-Organization",
-          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCPayerOrganization"
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "ValueSet/carin-rtpbc-patient-pay-category-value-set",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtbpcPatientPayCategoryValueSet"
         },
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCPayerOrganization",
-        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.description">description</a>" : "RTPBC Payer Organization",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtbpcPatientPayCategoryValueSet",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "ValueSet"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "ValueSet-carin-rtpbc-coverage-determination-value-set.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "ValueSet/carin-rtpbc-coverage-determination-value-set",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtbpcCoverageDeterminationValueSet"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtbpcCoverageDeterminationValueSet",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "ValueSet"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "ValueSet-carin-rtpbc-prescribable-product-code-value-set.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "ValueSet/carin-rtpbc-prescribable-product-code-value-set",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CARINRTPBCPrescribableProductCodeValueSet"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CARINRTPBCPrescribableProductCodeValueSet",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "CodeSystem"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "CodeSystem-carin-rtpbc-patient-pay-category-code-system.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "CodeSystem/carin-rtpbc-patient-pay-category-code-system",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcPatientPayCategoryCodeSystem"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcPatientPayCategoryCodeSystem",
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
+      },
+      {
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.extension">extension</a>" : [
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueString</a>" : "CodeSystem"
+          },
+          {
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.url">url</a>" : "http://hl7.org/fhir/StructureDefinition/implementationguide-page",
+            "<a href="http://hl7.org/fhir/R4/extensibility.html#Extension#Extension.value[x]">valueUri</a>" : "CodeSystem-carin-rtpbc-coverage-determination-code-system.html"
+          }
+        ],
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.reference">reference</a>" : {
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.reference">reference</a>" : "CodeSystem/carin-rtpbc-coverage-determination-code-system",
+          "<a href="http://hl7.org/fhir/R4/references.html#Reference#Reference.display">display</a>" : "CarinRtpbcCoverageDeterminationCodeSystem"
+        },
+        "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.name">name</a>" : "CarinRtpbcCoverageDeterminationCodeSystem",
         "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.resource.example[x]">exampleBoolean</a>" : false
       }
     ],
     "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.page">page</a>" : {
       "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.page.name[x]">nameUrl</a>" : "toc.md",
-      "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.page.title">title</a>" : "Narrative table of contents",
+      "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.page.title">title</a>" : "Table of contents",
       "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.page.generation">generation</a>" : "generated",
       "<a href="http://hl7.org/fhir/R4/implementationguide.html#ImplementationGuide.definition.page.page">page</a>" : [
         {
@@ -572,7 +682,7 @@ Formats: <a href="ImplementationGuide-hl7.fhir.us.carin-rtpbc.html">Narrative</a
   <div class="container">  <!-- container -->
    <div class="inner-wrapper">
     <p>
-      CARINRTPBC Version: 0.1.00-DRAFT  &reg;&copy; <a style="color: #81BEF7" href="http://hl7.org/fhir/R4/">FHIR Version: 4.0.0</a> (IG Publisher v4.0.0-a53ec6ee1b) generated on Mon, Oct 28, 2019 11:31-0500.
+      CarinRtpbc Version: 0.1.00-DRAFT  &reg;&copy; <a style="color: #81BEF7" href="http://hl7.org/fhir/R4/">FHIR Version: 4.0.0</a> (IG Publisher v4.0.0-a53ec6ee1b) generated on Fri, Nov 1, 2019 08:25-0500.
       | <a style="color: #81BEF7" href="https://gforge.hl7.org/gf/project/fhir/tracker/?action=TrackerItemAdd&amp;tracker_id=677">Propose a change</a>
         <a style="color: #81BEF7" rel="license" href="http://hl7.org/fhir/R4/license.html"><img style="border-style: none;" alt="CC0" src="cc0.png"/></a>
         </span>
